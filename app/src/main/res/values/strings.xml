@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SimpleAlarmAndroid</string>
+    <string name="appbar_title">My Alarms</string>
+    <string name="timer">Timer</string>
+    <string name="setting">Setting</string>
+    <string name="quick_alarm">Quick Alarm</string>
+    <string name="add">Add</string>
 </resources>
