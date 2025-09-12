@@ -5,4 +5,11 @@
     <string name="setting">Setting</string>
     <string name="quick_alarm">Quick Alarm</string>
     <string name="add">Add</string>
+    <string name="description_btn_add">Tap here to create an alarm</string>
+    <string name="new_alarm">New Alarm</string>
+    <string name="schedule_alarm">Schedule Alarm</string>
+    <string name="message_placeholder">Enter an alarm message</string>
+    <string name="default_text">Default</string>
+    <string name="save">Save</string>
+    <string name="noDescription">No description</string>
 </resources>
