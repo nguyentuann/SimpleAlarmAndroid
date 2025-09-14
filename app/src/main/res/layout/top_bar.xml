@@ -67,7 +67,7 @@
             android:background="@drawable/btn_border"
             android:contentDescription="@string/add"
             android:src="@drawable/ic_add"
-            android:padding="6dp"
+            android:padding="8dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

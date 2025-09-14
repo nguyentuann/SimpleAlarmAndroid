@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">SimpleAlarmAndroid</string>
+
+
+
+
     <string name="appbar_title">My Alarms</string>
     <string name="timer">Timer</string>
     <string name="setting">Setting</string>
@@ -11,5 +15,21 @@
     <string name="message_placeholder">Enter an alarm message</string>
     <string name="default_text">Default</string>
     <string name="save">Save</string>
+    <string name="sunday">Sun</string>
+    <string name="monday">Mon</string>
+    <string name="tuesday">Tue</string>
+    <string name="wednesday">Wed</string>
+    <string name="thursday">Thu</string>
+    <string name="friday">Fri</string>
+    <string name="saturday">Sat</string>
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
+
+
+
+    
     <string name="noDescription">No description</string>
+    <string name="title_select_date">Select a future date for this alarm</string>
+
+
 </resources>
