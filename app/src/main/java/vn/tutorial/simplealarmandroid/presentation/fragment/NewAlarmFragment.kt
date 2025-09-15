@@ -5,6 +5,7 @@ import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
@@ -12,14 +13,22 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import vn.tutorial.simplealarmandroid.R
+import vn.tutorial.simplealarmandroid.common.helpers.TimeConverter
+import vn.tutorial.simplealarmandroid.common.helpers.TimeHelper
 import vn.tutorial.simplealarmandroid.databinding.FragmentNewAlarmBinding
+import vn.tutorial.simplealarmandroid.presentation.viewModel.NewAlarmViewModel
 import java.util.Calendar
 
+@AndroidEntryPoint
 class NewAlarmFragment : Fragment() {
     private var _newAlarmFragment: FragmentNewAlarmBinding? = null
     private val newAlarmFragment get() = _newAlarmFragment!!
-    val selectedButtons = mutableSetOf<Button>()
+
+    val selectedDays = mutableListOf<Int>()
+    val newAlarmViewModel by viewModels<NewAlarmViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +41,7 @@ class NewAlarmFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        newAlarmViewModel.resetAlarm()
 
         // todo quay lại HomeFragment
         newAlarmFragment.toolBarNewAlarm.setNavigationOnClickListener {
@@ -49,59 +59,76 @@ class NewAlarmFragment : Fragment() {
         }
 
         // todo select date of week
-
-        val buttons = listOf(
-            newAlarmFragment.btnMon,
-            newAlarmFragment.btnTue,
-            newAlarmFragment.btnWed,
-            newAlarmFragment.btnThu,
-            newAlarmFragment.btnFri,
-            newAlarmFragment.btnSat,
-            newAlarmFragment.btnSun
+        val buttonsWithDays = mapOf(
+            newAlarmFragment.btnSun to 1,
+            newAlarmFragment.btnMon to 2,
+            newAlarmFragment.btnTue to 3,
+            newAlarmFragment.btnWed to 4,
+            newAlarmFragment.btnThu to 5,
+            newAlarmFragment.btnFri to 6,
+            newAlarmFragment.btnSat to 7,
         )
 
-        buttons.forEach { button ->
+        buttonsWithDays.forEach { button, dayOfWeek ->
             button.setOnClickListener {
-                if (selectedButtons.contains(button)) {
+                if (selectedDays.contains(dayOfWeek)) {
                     // todo Nếu button đã được chọn, bỏ chọn nó
-                    selectedButtons.remove(button)
+                    selectedDays.remove(dayOfWeek)
                     chooseDate(button, false)
                 } else {
                     // todo Nếu button chưa được chọn, chọn nó
-                    selectedButtons.add(button)
+                    selectedDays.add(dayOfWeek)
                     chooseDate(button, true)
                 }
             }
         }
+
+        // todo theo dõi time
+        newAlarmViewModel.newAlarm.observe(viewLifecycleOwner) { alarm ->
+            newAlarmFragment.tvTime.text =
+                TimeConverter.convertTimeToString(alarm.hour, alarm.minute)
+        }
+
+        // todo theo dõi message
+        newAlarmFragment.tfMessage.setText(newAlarmViewModel.newAlarm.value!!.message)
+
+        // todo lưu alarm
+        newAlarmFragment.btnSave.setOnClickListener {
+            saveNewAlarm()
+        }
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _newAlarmFragment = null
+
     }
 
-    // todo các hàm pop up chọn time và date
+    // todo các hàm pop up time picker
     fun popUpTimePicker() {
         val wrapper = ContextThemeWrapper(requireContext(), R.style.TimePickerDialogStyle)
         val timePickerDialog = TimePickerDialog(
             wrapper,
             { _, hour, minute ->
-                println("$hour : $minute")
+                newAlarmViewModel.updateTime(hour, minute)
             },
             0,
             0,
-            false // 12h format,
+            true
 
         )
         timePickerDialog.show()
     }
 
+    // todo hàm pop up date picker
     fun popUpDatePicker() {
         val wrapper = ContextThemeWrapper(requireContext(), R.style.TimePickerDialogStyle)
         val datePickerDialog = DatePickerDialog(
             wrapper,
             { _, year, month, dayOfMonth ->
-                println("$dayOfMonth / $month / $year")
+                var date = TimeHelper.getCalendarFromDate(year, month, dayOfMonth).timeInMillis
+                newAlarmViewModel.updateDate(date)
             },
             2024,
             5,
@@ -121,6 +148,7 @@ class NewAlarmFragment : Fragment() {
         datePickerDialog.show()
     }
 
+    // todo chọn ngày trong tuần
     fun chooseDate(button: Button, isChosen: Boolean = false) {
         val color = if (isChosen) R.color.light_blue else R.color.dark_blue
         button.backgroundTintList =
@@ -129,6 +157,13 @@ class NewAlarmFragment : Fragment() {
         button.backgroundTintList = ColorStateList.valueOf(
             ContextCompat.getColor(requireContext(), color)
         )
+    }
+
+    // todo lưu alarm
+    fun saveNewAlarm() {
+        newAlarmViewModel.updateDateOfWeek(selectedDays)
+        newAlarmViewModel.updateMessage(newAlarmFragment.tfMessage.text.toString())
+        Log.d("New Alarm", newAlarmViewModel.newAlarm.value!!.toString())
     }
 
 }
