@@ -5,7 +5,6 @@ import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +12,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import vn.tutorial.simplealarmandroid.R
 import vn.tutorial.simplealarmandroid.common.helpers.TimeConverter
 import vn.tutorial.simplealarmandroid.common.helpers.TimeHelper
 import vn.tutorial.simplealarmandroid.databinding.FragmentNewAlarmBinding
+import vn.tutorial.simplealarmandroid.presentation.viewModel.ListAlarmViewModel
 import vn.tutorial.simplealarmandroid.presentation.viewModel.NewAlarmViewModel
 import java.util.Calendar
 
@@ -29,6 +30,7 @@ class NewAlarmFragment : Fragment() {
 
     val selectedDays = mutableListOf<Int>()
     val newAlarmViewModel by viewModels<NewAlarmViewModel>()
+    val listAlarmViewModel by activityViewModels<ListAlarmViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +43,10 @@ class NewAlarmFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // todo reset alarm
         newAlarmViewModel.resetAlarm()
+        selectedDays.clear()
 
         // todo quay lại HomeFragment
         newAlarmFragment.toolBarNewAlarm.setNavigationOnClickListener {
@@ -53,7 +58,7 @@ class NewAlarmFragment : Fragment() {
             popUpTimePicker()
         }
 
-        // todo pop up datepicker
+        // todo pop up date picker
         newAlarmFragment.btnCalendar.setOnClickListener {
             popUpDatePicker()
         }
@@ -83,6 +88,13 @@ class NewAlarmFragment : Fragment() {
             }
         }
 
+        // todo theo dõi ngày trong tương lai
+        newAlarmViewModel.newAlarm.observe(viewLifecycleOwner) { alarm ->
+            if (alarm.date != null) {
+                newAlarmFragment.btnDays.visibility = View.GONE
+            }
+        }
+
         // todo theo dõi time
         newAlarmViewModel.newAlarm.observe(viewLifecycleOwner) { alarm ->
             newAlarmFragment.tvTime.text =
@@ -102,7 +114,6 @@ class NewAlarmFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _newAlarmFragment = null
-
     }
 
     // todo các hàm pop up time picker
@@ -116,7 +127,6 @@ class NewAlarmFragment : Fragment() {
             0,
             0,
             true
-
         )
         timePickerDialog.show()
     }
@@ -127,6 +137,9 @@ class NewAlarmFragment : Fragment() {
         val datePickerDialog = DatePickerDialog(
             wrapper,
             { _, year, month, dayOfMonth ->
+                newAlarmFragment.scheduleAlarm.text =
+                    getString(R.string.schedule_for, "$dayOfMonth/${month + 1}/$year")
+                4
                 var date = TimeHelper.getCalendarFromDate(year, month, dayOfMonth).timeInMillis
                 newAlarmViewModel.updateDate(date)
             },
@@ -161,9 +174,18 @@ class NewAlarmFragment : Fragment() {
 
     // todo lưu alarm
     fun saveNewAlarm() {
-        newAlarmViewModel.updateDateOfWeek(selectedDays)
+
+        if (newAlarmViewModel.newAlarm.value!!.date != null) {
+            newAlarmViewModel.updateDateOfWeek(null)
+        } else {
+            val sortedDays = selectedDays.sorted()
+            newAlarmViewModel.updateDateOfWeek(sortedDays)
+        }
         newAlarmViewModel.updateMessage(newAlarmFragment.tfMessage.text.toString())
-        Log.d("New Alarm", newAlarmViewModel.newAlarm.value!!.toString())
+
+        listAlarmViewModel.saveAlarm(newAlarmViewModel.newAlarm.value!!)
+
+        activity?.onBackPressedDispatcher?.onBackPressed() // todo quay lại HomeFragment
     }
 
 }

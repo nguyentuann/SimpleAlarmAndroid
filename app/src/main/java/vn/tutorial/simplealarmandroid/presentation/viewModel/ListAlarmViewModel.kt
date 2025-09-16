@@ -3,25 +3,29 @@ package vn.tutorial.simplealarmandroid.presentation.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import vn.tutorial.simplealarmandroid.domain.model.AlarmModel
+import vn.tutorial.simplealarmandroid.domain.repository.AlarmRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class ListAlarmViewModel @Inject constructor() : ViewModel() {
+class ListAlarmViewModel @Inject constructor(
+    private val repository: AlarmRepository
+) : ViewModel() {
 
-    private val _alarmList = MutableLiveData<List<AlarmModel>>(emptyList())
-    val alarmList: LiveData<List<AlarmModel>> = _alarmList
+    val alarmList: LiveData<List<AlarmModel>> = repository.getAllAlarms()
 
-    fun getAllAlarms(): List<AlarmModel> {
-        return _alarmList.value ?: emptyList()
-    }
-
-    fun addAlarm(alarm: AlarmModel) {
-        _alarmList.value = _alarmList.value?.plus(alarm)
+    fun saveAlarm(alarm: AlarmModel) {
+        viewModelScope.launch {
+            repository.addAlarm(alarm)
+        }
     }
 
     fun removeAlarm(alarm: AlarmModel) {
-        _alarmList.value = _alarmList.value?.filter { it != alarm }
+        viewModelScope.launch {
+            repository.deleteAlarm(alarm)
+        }
     }
 }
