@@ -1,5 +1,6 @@
 package vn.tutorial.simplealarmandroid.data.local.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,14 +10,14 @@ import vn.tutorial.simplealarmandroid.data.entity.AlarmEntity
 @Dao
 interface AppDAO {
     @Insert
-    fun addAlarm(newAlarm: AlarmEntity)
+    suspend fun addAlarm(newAlarm: AlarmEntity)
 
     @Delete
-    fun removeAlarm(alarm: AlarmEntity)
+    suspend fun removeAlarm(alarm: AlarmEntity)
 
     @Query("SELECT dateOfWeek FROM alarm WHERE id = :id")
-    fun getDateOfWeek(id: Int): Int
+    suspend fun getDateOfWeek(id: Int): Int
 
     @Query("SELECT * FROM alarm")
-    fun getAllAlarm(): List<AlarmEntity>
+    suspend fun getAllAlarms(): List<AlarmEntity>
 }

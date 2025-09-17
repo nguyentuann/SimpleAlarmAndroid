@@ -47,16 +47,21 @@ class HomeFragment(
         }
 
         // todo hiển thị list alarm nếu có
-        if (!listAlarmViewModel.alarmList.value.isNullOrEmpty()) {
+        listAlarmViewModel.alarmList.observe(viewLifecycleOwner) { alarms ->
+            if (!alarms.isNullOrEmpty()) {
+                Log.d(Tag.AlarmTag, "Loaded ${alarms.size} alarms into UI")
 
-            Log.d(Tag.AlarmTag, "have alarm")
-            val recyclerView = homeFragment.alarmList
-            recyclerView.layoutManager = LinearLayoutManager(activity)
-            recyclerView.adapter = AlarmAdapter(listAlarmViewModel.alarmList.value!!)
+                val recyclerView = homeFragment.alarmList
+                recyclerView.layoutManager = LinearLayoutManager(activity)
+                recyclerView.adapter = AlarmAdapter(alarms)
 
-
-            homeFragment.alarmList.visibility = View.VISIBLE
-            homeFragment.addAlarmCard.visibility = View.GONE
+                homeFragment.alarmList.visibility = View.VISIBLE
+                homeFragment.addAlarmCard.visibility = View.GONE
+            } else {
+                Log.d(Tag.AlarmTag, "No alarms found")
+                homeFragment.alarmList.visibility = View.GONE
+                homeFragment.addAlarmCard.visibility = View.VISIBLE
+            }
         }
 
     }

@@ -3,28 +3,69 @@ package vn.tutorial.simplealarmandroid.data.repositoryImpl
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import vn.tutorial.simplealarmandroid.common.constants.Tag
-import vn.tutorial.simplealarmandroid.data.mock.MockData
+import vn.tutorial.simplealarmandroid.data.entity.toAlarmEntity
+import vn.tutorial.simplealarmandroid.data.entity.toAlarmModel
+import vn.tutorial.simplealarmandroid.data.entity.toDataString
+import vn.tutorial.simplealarmandroid.data.local.dao.AppDAO
+import vn.tutorial.simplealarmandroid.data.scheduler.AlarmScheduler
 import vn.tutorial.simplealarmandroid.domain.model.AlarmModel
 import vn.tutorial.simplealarmandroid.domain.repository.AlarmRepository
 import javax.inject.Inject
 
-class AlarmRepositoryImpl @Inject constructor() : AlarmRepository {
+class AlarmRepositoryImpl @Inject constructor(
+    private val appDAO: AppDAO,
+    private val alarmScheduler: AlarmScheduler
+) : AlarmRepository {
 
-    private val alarmList = MutableLiveData<List<AlarmModel>>(MockData.AlarmData)
+    private val alarmList = MutableLiveData<List<AlarmModel>>()
 
-    override fun getAllAlarms(): LiveData<List<AlarmModel>> {
-        return alarmList
+    init {
+        CoroutineScope(Dispatchers.IO).launch {
+            val fromDB = appDAO.getAllAlarms()
+            val models = fromDB.map { it.toAlarmModel() }
+            Log.d(Tag.AlarmTag, "Loaded ${models.size} alarms from DB")
+            alarmList.postValue(models)
+        }
     }
 
-    override suspend fun addAlarm(alarm: AlarmModel) {
+    override fun getAllAlarms(): LiveData<List<AlarmModel>> = alarmList
+
+    override suspend fun addAlarm(alarmModel: AlarmModel) {
         alarmList.value = alarmList.value?.toMutableList()?.apply {
-            add(alarm)
+            add(alarmModel)
         }
-        Log.d(Tag.AlarmTag + "Repository", alarmList.value!!.toString())
+
+        // todo save to database
+        val entity = alarmModel.toAlarmEntity()
+        appDAO.addAlarm(entity)
+        Log.d(Tag.AlarmTag, " Save to DB${entity.toDataString()}")
+
+        // todo schedule alarm with AlarmManager
+//        if (alarmModel.isOn) {
+//            alarmScheduler.scheduleAlarm(alarmModel)
+//        }
     }
 
     override suspend fun deleteAlarm(alarm: AlarmModel) {
         alarmList.value = alarmList.value?.filter { it.id != alarm.id }
+
+        // todo  delete from database
+
+        // todo cancel alarm with AlarmManager
+    }
+
+    override suspend fun updateAlarm(alarm: AlarmModel) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun activeAlarm(
+        alarm: AlarmModel,
+        isActive: Boolean
+    ) {
+        TODO("Not yet implemented")
     }
 }

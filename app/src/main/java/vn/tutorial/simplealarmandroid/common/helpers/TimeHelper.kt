@@ -63,4 +63,14 @@ object TimeHelper {
             set(Calendar.MILLISECOND, 0)
         }
     }
+
+    fun getTomorrowDate(): Calendar {
+        return Calendar.getInstance(TimeZone.getTimeZone("Asia/Ho_Chi_Minh")).apply {
+            add(Calendar.DAY_OF_YEAR, 1)
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+    }
 }

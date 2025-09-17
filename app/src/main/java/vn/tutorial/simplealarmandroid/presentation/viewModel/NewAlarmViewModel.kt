@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import vn.tutorial.simplealarmandroid.common.helpers.TimeHelper
 import vn.tutorial.simplealarmandroid.domain.model.AlarmModel
 import vn.tutorial.simplealarmandroid.domain.repository.AlarmRepository
 import java.util.UUID
@@ -32,7 +33,7 @@ class NewAlarmViewModel @Inject constructor() : ViewModel() {
         _newAlarm.value = _newAlarm.value?.copy(hour = hour, minute = minute)
     }
 
-    fun updateDate(date: Long) {
+    fun updateDate(date: Long?) {
         _newAlarm.value = _newAlarm.value?.copy(date = date)
     }
 
@@ -59,6 +60,31 @@ class NewAlarmViewModel @Inject constructor() : ViewModel() {
             dateOfWeek = null,
             date = null
         )
+    }
+
+    fun prepareAlarmBeforeSave(selectedDays: Set<Int>, message: String) {
+        val alarm = _newAlarm.value ?: return
+
+        when {
+            alarm.date != null -> updateDateOfWeek(null)
+            selectedDays.isEmpty() -> updateDate(TimeHelper.getTomorrowDate().timeInMillis)
+            else -> updateDateOfWeek(selectedDays.sorted())
+        }
+
+        updateMessage(message)
+    }
+
+    fun isChange(): Boolean {
+        val initial = AlarmModel(
+            id = _newAlarm.value!!.id,
+            hour = 0,
+            minute = 0,
+            isOn = true,
+            message = null,
+            dateOfWeek = null,
+            date = null
+        )
+        return initial != _newAlarm.value
     }
 
 }
