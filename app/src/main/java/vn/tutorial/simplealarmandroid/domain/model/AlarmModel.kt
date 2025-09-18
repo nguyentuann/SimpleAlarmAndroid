@@ -1,7 +1,5 @@
 package vn.tutorial.simplealarmandroid.domain.model
 
-import java.util.UUID
-
 data class AlarmModel(
     val id: String,
     var hour: Int,

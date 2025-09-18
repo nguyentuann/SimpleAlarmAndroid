@@ -11,33 +11,47 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import vn.tutorial.simplealarmandroid.MainActivity
 import vn.tutorial.simplealarmandroid.common.constants.Tag
+import vn.tutorial.simplealarmandroid.common.extensions.CommonFunction
 import vn.tutorial.simplealarmandroid.databinding.FragmentHomeBinding
+import vn.tutorial.simplealarmandroid.domain.model.AlarmModel
 import vn.tutorial.simplealarmandroid.presentation.adapter.AlarmAdapter
 import vn.tutorial.simplealarmandroid.presentation.viewModel.ListAlarmViewModel
 
 @AndroidEntryPoint
-class HomeFragment(
-) : Fragment() {
+class HomeFragment : Fragment() {
     private var _homeFragment: FragmentHomeBinding? = null
     private val homeFragment get() = _homeFragment!!
 
-    val listAlarmViewModel by activityViewModels<ListAlarmViewModel>()
+    private val listAlarmViewModel by activityViewModels<ListAlarmViewModel>()
+
+    // todo giữ adapter như property để dùng lại
+    private lateinit var alarmAdapter: AlarmAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         _homeFragment = FragmentHomeBinding.inflate(inflater, container, false)
-
-
         return homeFragment.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // init adapter 1 lần
+        alarmAdapter = AlarmAdapter(
+            { alarm -> deleteAlarm(alarm) },
+            { alarm -> editAlarm(alarm) }
+        )
+
+
+        homeFragment.alarmList.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = alarmAdapter
+        }
+
+        // click thêm mới
         homeFragment.toolBar.toolBarAdd.setOnClickListener {
             (activity as MainActivity).addNewAlarm()
         }
@@ -46,14 +60,11 @@ class HomeFragment(
             (activity as MainActivity).addNewAlarm()
         }
 
-        // todo hiển thị list alarm nếu có
+        // quan sát dữ liệu
         listAlarmViewModel.alarmList.observe(viewLifecycleOwner) { alarms ->
             if (!alarms.isNullOrEmpty()) {
                 Log.d(Tag.AlarmTag, "Loaded ${alarms.size} alarms into UI")
-
-                val recyclerView = homeFragment.alarmList
-                recyclerView.layoutManager = LinearLayoutManager(activity)
-                recyclerView.adapter = AlarmAdapter(alarms)
+                alarmAdapter.submitList(alarms)
 
                 homeFragment.alarmList.visibility = View.VISIBLE
                 homeFragment.addAlarmCard.visibility = View.GONE
@@ -63,11 +74,26 @@ class HomeFragment(
                 homeFragment.addAlarmCard.visibility = View.VISIBLE
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _homeFragment = null
+    }
+
+    private fun deleteAlarm(alarm: AlarmModel) {
+        CommonFunction.showAlertDialog(
+            requireContext(),
+            "Delete Alarm",
+            "Are you sure to delete this alarm?",
+            onConfirm = {
+                listAlarmViewModel.delete(alarm)
+            },
+        )
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _homeFragment = null
+    private fun editAlarm(alarm: AlarmModel) {
+        Log.d(Tag.AlarmTag, "Edit alarm call")
     }
 }

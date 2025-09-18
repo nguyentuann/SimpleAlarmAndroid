@@ -1,6 +1,5 @@
 package vn.tutorial.simplealarmandroid.presentation.fragment
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
@@ -14,14 +13,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import vn.tutorial.simplealarmandroid.R
 import vn.tutorial.simplealarmandroid.common.constants.Tag
+import vn.tutorial.simplealarmandroid.common.extensions.CommonFunction
+import vn.tutorial.simplealarmandroid.common.helpers.AlarmHelper
 import vn.tutorial.simplealarmandroid.common.helpers.TimeConverter
-import vn.tutorial.simplealarmandroid.common.helpers.TimeHelper
 import vn.tutorial.simplealarmandroid.databinding.FragmentNewAlarmBinding
 import vn.tutorial.simplealarmandroid.presentation.viewModel.ListAlarmViewModel
 import vn.tutorial.simplealarmandroid.presentation.viewModel.NewAlarmViewModel
@@ -48,15 +49,19 @@ class NewAlarmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // todo reset alarm
-        newAlarmViewModel.resetAlarm()
-        selectedDays.clear()
-
 
         // todo manager create alarm
         setupToolbar()
         setupButtons()
         observeViewModel()
+
+        newAlarmFragment.tfMessage.setText(newAlarmViewModel.newAlarm.value?.message ?: "")
+
+        newAlarmFragment.tfMessage.doOnTextChanged { text, _, _, _ ->
+            // todo update message
+            newAlarmViewModel.updateMessage(text.toString())
+        }
+
 
         // todo save alarm
         newAlarmFragment.btnSave.setOnClickListener {
@@ -67,6 +72,13 @@ class NewAlarmFragment : Fragment() {
             saveNewAlarm()
         }
 
+    }
+
+    override fun onStop() {
+        super.onStop()
+        newAlarmViewModel.resetAlarm()
+        selectedDays.clear()
+        newAlarmFragment.tfMessage.setText("")
     }
 
     override fun onDestroy() {
@@ -85,13 +97,13 @@ class NewAlarmFragment : Fragment() {
         newAlarmFragment.btnCalendar.setOnClickListener { popUpDatePicker() }
 
         val buttonsWithDays = mapOf(
-            newAlarmFragment.btnMon to 1,
-            newAlarmFragment.btnTue to 2,
-            newAlarmFragment.btnWed to 3,
-            newAlarmFragment.btnThu to 4,
-            newAlarmFragment.btnFri to 5,
-            newAlarmFragment.btnSat to 6,
-            newAlarmFragment.btnSun to 7
+            newAlarmFragment.btnSun to 1,
+            newAlarmFragment.btnMon to 2,
+            newAlarmFragment.btnTue to 3,
+            newAlarmFragment.btnWed to 4,
+            newAlarmFragment.btnThu to 5,
+            newAlarmFragment.btnFri to 6,
+            newAlarmFragment.btnSat to 7,
         )
 
         buttonsWithDays.forEach { (button, dayOfWeek) ->
@@ -111,15 +123,11 @@ class NewAlarmFragment : Fragment() {
             newAlarmFragment.tvTime.text =
                 TimeConverter.convertTimeToString(alarm.hour, alarm.minute)
 
-            // update message
-            if (newAlarmFragment.tfMessage.text.toString() != alarm.message) {
-                newAlarmFragment.tfMessage.setText(alarm.message)
-            }
-
             // show/hide weekly buttons
             newAlarmFragment.btnDays.visibility =
                 if (alarm.date != null) View.GONE else View.VISIBLE
         }
+
     }
 
     // todo các hàm pop up time picker
@@ -143,9 +151,12 @@ class NewAlarmFragment : Fragment() {
         val datePickerDialog = DatePickerDialog(
             wrapper,
             { _, year, month, dayOfMonth ->
-                newAlarmFragment.scheduleAlarm.text =
-                    getString(R.string.schedule_for, "$dayOfMonth/${month + 1}/$year")
-                var date = TimeHelper.getCalendarFromDate(year, month, dayOfMonth).timeInMillis
+                newAlarmFragment.scheduleAlarm.text = getString(
+                    R.string.schedule_for,
+                    TimeConverter.dayMonthYearFormat(dayOfMonth, month, year)
+                )
+
+                var date = AlarmHelper.getCalendarFromDate(year, month, dayOfMonth)
                 newAlarmViewModel.updateDate(date)
             },
             2024,
@@ -189,7 +200,6 @@ class NewAlarmFragment : Fragment() {
         )
 
         listAlarmViewModel.saveAlarm(newAlarmViewModel.newAlarm.value!!)
-
         activity?.onBackPressedDispatcher?.onBackPressed() // todo quay lại HomeFragment
     }
 
@@ -198,19 +208,12 @@ class NewAlarmFragment : Fragment() {
         if (newAlarmViewModel.isChange() || selectedDays.isNotEmpty() || newAlarmFragment.tfMessage.text.trim()
                 .isNotEmpty()
         ) {
-            AlertDialog.Builder(context).apply {
-                setTitle("Confirm")
-                setMessage("Alarm is not saved. Do you want to exit without saving?")
-                setCancelable(false)
-                    .setNegativeButton("Cancel") { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .setPositiveButton("OK") { dialog, _ ->
-                        dialog.dismiss()
-                        activity?.onBackPressedDispatcher?.onBackPressed()
-                    }
-                    .show()
-            }
+            CommonFunction.showAlertDialog(
+                context,
+                "Discard changes?",
+                "You have unsaved changes. Are you sure you want to discard them?",
+                onConfirm = { activity?.onBackPressedDispatcher?.onBackPressed() }
+            )
         } else {
             Log.d(Tag.AlarmTag, "chưa có thay đổi gì")
             activity?.onBackPressedDispatcher?.onBackPressed()

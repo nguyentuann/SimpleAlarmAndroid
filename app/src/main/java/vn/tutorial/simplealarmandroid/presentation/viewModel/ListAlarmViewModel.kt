@@ -25,9 +25,10 @@ class ListAlarmViewModel @Inject constructor(
         }
     }
 
-    fun removeAlarm(alarm: AlarmModel) {
+    fun delete(alarm: AlarmModel) {
         viewModelScope.launch {
             repository.deleteAlarm(alarm)
         }
     }
+
 }

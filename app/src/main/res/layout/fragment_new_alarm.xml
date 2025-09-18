@@ -208,6 +208,7 @@
                 style="@style/CustomEditTextStyle"
                 android:autofillHints="name"
                 android:hint="@string/message_placeholder"
+                android:text=""
                 android:inputType="text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

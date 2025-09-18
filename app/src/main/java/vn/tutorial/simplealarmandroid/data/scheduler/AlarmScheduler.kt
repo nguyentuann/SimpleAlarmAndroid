@@ -5,7 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import vn.tutorial.simplealarmandroid.common.helpers.TimeHelper
+import vn.tutorial.simplealarmandroid.common.helpers.AlarmHelper
 import vn.tutorial.simplealarmandroid.domain.model.AlarmModel
 import vn.tutorial.simplealarmandroid.receiver.AlarmReceiver
 import javax.inject.Inject
@@ -38,11 +38,11 @@ class AlarmScheduler @Inject constructor(
         val triggerTime: Long = when {
             alarm.dateOfWeek != null && alarm.date == null -> {
                 // Tìm ngày gần nhất
-                TimeHelper.getNextDayOfWeek(
+                AlarmHelper.getNextDayOfWeek(
                     alarm.hour,
                     alarm.minute,
                     alarm.dateOfWeek!!
-                )
+                ).timeInMillis
             }
 
             alarm.date != null -> alarm.date!!

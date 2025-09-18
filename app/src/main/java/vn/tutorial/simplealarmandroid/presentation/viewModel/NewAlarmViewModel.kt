@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import vn.tutorial.simplealarmandroid.common.helpers.TimeHelper
+import vn.tutorial.simplealarmandroid.common.helpers.AlarmHelper
 import vn.tutorial.simplealarmandroid.domain.model.AlarmModel
-import vn.tutorial.simplealarmandroid.domain.repository.AlarmRepository
 import java.util.UUID
 import javax.inject.Inject
 
@@ -37,8 +37,11 @@ class NewAlarmViewModel @Inject constructor() : ViewModel() {
         _newAlarm.value = _newAlarm.value?.copy(date = date)
     }
 
-    fun updateMessage(message: String) {
-        _newAlarm.value = _newAlarm.value?.copy(message = message)
+
+    fun updateMessage(text: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _newAlarm.postValue(_newAlarm.value?.copy(message = text))
+        }
     }
 
     fun updateDateOfWeek(dateOfWeek: List<Int>?) {
@@ -48,7 +51,6 @@ class NewAlarmViewModel @Inject constructor() : ViewModel() {
     fun updateStatus(isOn: Boolean) {
         _newAlarm.value = _newAlarm.value?.copy(isOn = isOn)
     }
-
 
     fun resetAlarm() {
         _newAlarm.value = AlarmModel(
@@ -67,7 +69,7 @@ class NewAlarmViewModel @Inject constructor() : ViewModel() {
 
         when {
             alarm.date != null -> updateDateOfWeek(null)
-            selectedDays.isEmpty() -> updateDate(TimeHelper.getTomorrowDate().timeInMillis)
+            selectedDays.isEmpty() -> updateDate(AlarmHelper.getTomorrowDate())
             else -> updateDateOfWeek(selectedDays.sorted())
         }
 

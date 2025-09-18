@@ -3,9 +3,9 @@ package vn.tutorial.simplealarmandroid.common.helpers
 import java.util.Calendar
 import java.util.TimeZone
 
-object TimeHelper {
+object AlarmHelper {
     //todo Lấy thời gian tiếp theo từ giờ phút và ngày trong tuần
-    fun getNextDayOfWeek(hour: Int, minute: Int, daysOfWeek: List<Int>): Long {
+    fun getNextDayOfWeek(hour: Int, minute: Int, daysOfWeek: List<Int>): Calendar {
         val now = Calendar.getInstance(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"))
         val next = Calendar.getInstance(TimeZone.getTimeZone("Asia/Ho_Chi_Minh")).apply {
             set(Calendar.HOUR_OF_DAY, hour)
@@ -28,7 +28,7 @@ object TimeHelper {
             }
             addDays++
         }
-        return next.timeInMillis
+        return next
     }
 
     // todo chuyển đổi từ DB sang List
@@ -51,8 +51,8 @@ object TimeHelper {
         return result
     }
 
-    // todo trả về Calendar từ ngày
-    fun getCalendarFromDate(year: Int, month: Int, day: Int): Calendar {
+    // todo trả về Calendar từ ngày + dùng để setup ngày được chon
+    fun getCalendarFromDate(year: Int, month: Int, day: Int): Long {
         return Calendar.getInstance(TimeZone.getTimeZone("Asia/Ho_Chi_Minh")).apply {
             set(Calendar.YEAR, year)
             set(Calendar.MONTH, month)
@@ -61,16 +61,17 @@ object TimeHelper {
             set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
-        }
+        }.timeInMillis
     }
 
-    fun getTomorrowDate(): Calendar {
+    // todo lấy ra ngày mai
+    fun getTomorrowDate(): Long {
         return Calendar.getInstance(TimeZone.getTimeZone("Asia/Ho_Chi_Minh")).apply {
             add(Calendar.DAY_OF_YEAR, 1)
             set(Calendar.HOUR_OF_DAY, 0)
             set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
-        }
+        }.timeInMillis
     }
 }

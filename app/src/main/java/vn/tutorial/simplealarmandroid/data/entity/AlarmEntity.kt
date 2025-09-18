@@ -2,8 +2,7 @@ package vn.tutorial.simplealarmandroid.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import vn.tutorial.simplealarmandroid.common.helpers.TimeConverter
-import vn.tutorial.simplealarmandroid.common.helpers.TimeHelper
+import vn.tutorial.simplealarmandroid.common.helpers.AlarmHelper
 import vn.tutorial.simplealarmandroid.domain.model.AlarmModel
 
 @Entity(tableName = "alarm")
@@ -18,30 +17,30 @@ class AlarmEntity(
     val date: Long? = null
 )
 
-fun AlarmEntity.toAlarmModel() : AlarmModel {
+fun AlarmEntity.toAlarmModel(): AlarmModel {
     return AlarmModel(
         id = id,
         hour = hour,
         minute = minute,
         isOn = isOn,
         message = message,
-        dateOfWeek = if (dateOfWeek == null) null else TimeHelper.fromBitToList(dateOfWeek),
+        dateOfWeek = if (dateOfWeek == null) null else AlarmHelper.fromBitToList(dateOfWeek),
         date = date
     )
 }
 
-fun AlarmModel.toAlarmEntity() : AlarmEntity {
+fun AlarmModel.toAlarmEntity(): AlarmEntity {
     return AlarmEntity(
         id = id,
         hour = hour,
         minute = minute,
         isOn = isOn,
         message = message,
-        dateOfWeek = if (dateOfWeek == null) null else TimeHelper.fromListToBit(dateOfWeek!!),
+        dateOfWeek = if (dateOfWeek == null) null else AlarmHelper.fromListToBit(dateOfWeek!!),
         date = date
     )
 }
 
-fun AlarmEntity.toDataString() : String {
+fun AlarmEntity.toDataString(): String {
     return "AlarmEntity(id=$id, hour=$hour, minute=$minute, isOn=$isOn, message=$message, dateOfWeek=$dateOfWeek, date=$date)"
 }

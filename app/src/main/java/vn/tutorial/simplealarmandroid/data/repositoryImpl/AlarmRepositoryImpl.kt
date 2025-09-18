@@ -54,6 +54,7 @@ class AlarmRepositoryImpl @Inject constructor(
         alarmList.value = alarmList.value?.filter { it.id != alarm.id }
 
         // todo  delete from database
+        appDAO.deleteAlarm(alarm.toAlarmEntity())
 
         // todo cancel alarm with AlarmManager
     }
