@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import vn.tutorial.simplealarmandroid.MainActivity
+import vn.tutorial.simplealarmandroid.R
 import vn.tutorial.simplealarmandroid.common.constants.Tag
 import vn.tutorial.simplealarmandroid.common.extensions.CommonFunction
 import vn.tutorial.simplealarmandroid.databinding.FragmentHomeBinding
@@ -93,8 +94,12 @@ class HomeFragment : Fragment() {
         )
     }
 
-    private fun editAlarm(alarm: AlarmModel) {
-        Log.d(Tag.AlarmTag, "Edit alarm call")
+    private fun editAlarm(alarmId: String) {
+        val fragment = NewAlarmFragment.newInstance(alarmId)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.home_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
 

@@ -68,9 +68,9 @@ class AlarmScheduler @Inject constructor(
         )
     }
 
-    fun changeAlarm(alarm: AlarmModel) {
+    fun editAlarm(alarm: AlarmModel) {
         // todo change alarm with AlarmManager
         cancelAlarm(alarm)
-        scheduleAlarm(alarm)
+        if (alarm.isOn) scheduleAlarm(alarm)
     }
 }

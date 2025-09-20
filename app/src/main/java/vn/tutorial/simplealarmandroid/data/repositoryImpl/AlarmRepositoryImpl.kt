@@ -67,7 +67,15 @@ class AlarmRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateAlarm(alarm: AlarmModel) {
-        TODO("Not yet implemented")
+        alarmList.value = alarmList.value?.map {
+            if (it.id == alarm.id) alarm else it
+        }
+
+        // todo update database
+        appDAO.updateAlarm(alarm.toAlarmEntity())
+
+        // todo change alarm with AlarmManager
+        alarmScheduler.editAlarm(alarm)
     }
 
     override suspend fun activeAlarm(
@@ -89,5 +97,12 @@ class AlarmRepositoryImpl @Inject constructor(
         } else {
             alarmScheduler.cancelAlarm(updatedAlarm)
         }
+    }
+
+    override fun getAlarmById(id: String): LiveData<AlarmModel?> {
+        alarmList.value?.forEach {
+            if (it.id == id) return MutableLiveData(it)
+        }
+        return MutableLiveData(null)
     }
 }

@@ -89,4 +89,8 @@ class NewAlarmViewModel @Inject constructor() : ViewModel() {
         return initial != _newAlarm.value
     }
 
+    fun setAlarm(alarm: AlarmModel) {
+        _newAlarm.value = alarm
+    }
+
 }

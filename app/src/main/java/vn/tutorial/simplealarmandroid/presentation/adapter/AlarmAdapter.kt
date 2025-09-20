@@ -21,7 +21,7 @@ import vn.tutorial.simplealarmandroid.domain.model.AlarmModel
 
 class AlarmAdapter(
     private val deleteAlarm: (AlarmModel) -> Unit,
-    private val editAlarm: (AlarmModel) -> Unit,
+    private val editAlarm: (String) -> Unit,
     private val enableAlarm: (AlarmModel) -> Unit
 
 ) : ListAdapter<AlarmModel, AlarmAdapter.AlarmViewHolder>(DiffCallback) {
@@ -64,7 +64,7 @@ class AlarmAdapter(
 
             // gán sự kiện
             btnDelete.setOnClickListener { deleteAlarm(item) }
-            btnEdit.setOnClickListener { editAlarm(item) }
+            btnEdit.setOnClickListener { editAlarm(item.id) }
         }
     }
 

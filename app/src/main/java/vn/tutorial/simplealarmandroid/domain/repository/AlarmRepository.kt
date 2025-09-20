@@ -9,4 +9,5 @@ interface AlarmRepository {
     suspend fun deleteAlarm(alarm: AlarmModel)
     suspend fun updateAlarm(alarm: AlarmModel)
     suspend fun activeAlarm(alarm: AlarmModel, isActive: Boolean)
+    fun getAlarmById(id: String): LiveData<AlarmModel?>
 }

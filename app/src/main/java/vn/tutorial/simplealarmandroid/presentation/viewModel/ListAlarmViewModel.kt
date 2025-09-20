@@ -37,4 +37,14 @@ class ListAlarmViewModel @Inject constructor(
         }
     }
 
+    fun getAlarmById(id: String): LiveData<AlarmModel?> {
+        return repository.getAlarmById(id)
+    }
+
+    fun updateAlarm(alarm: AlarmModel) {
+        viewModelScope.launch {
+            repository.updateAlarm(alarm)
+        }
+    }
+
 }
