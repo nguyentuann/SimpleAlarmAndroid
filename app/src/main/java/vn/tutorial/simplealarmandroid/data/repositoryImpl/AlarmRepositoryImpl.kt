@@ -26,8 +26,16 @@ class AlarmRepositoryImpl @Inject constructor(
     init {
         CoroutineScope(Dispatchers.IO).launch {
             val fromDB = appDAO.getAllAlarms()
+            Log.d(
+                Tag.AlarmTag,
+                "Loaded ${fromDB.size} alarms from DB + ${fromDB.map { it.toDataString() }}"
+            )
+
             val models = fromDB.map { it.toAlarmModel() }
-            Log.d(Tag.AlarmTag, "Loaded ${models.size} alarms from DB")
+            Log.d(
+                Tag.AlarmTag,
+                "Loaded ${models.size} alarms from DB + ${models.map { it.toString() }}"
+            )
             alarmList.postValue(models)
         }
     }
@@ -45,18 +53,17 @@ class AlarmRepositoryImpl @Inject constructor(
         Log.d(Tag.AlarmTag, " Save to DB${entity.toDataString()}")
 
         // todo schedule alarm with AlarmManager
-//        if (alarmModel.isOn) {
-//            alarmScheduler.scheduleAlarm(alarmModel)
-//        }
+        alarmScheduler.scheduleAlarm(alarmModel)
     }
 
-    override suspend fun deleteAlarm(alarm: AlarmModel) {
-        alarmList.value = alarmList.value?.filter { it.id != alarm.id }
+    override suspend fun deleteAlarm(alarmModel: AlarmModel) {
+        alarmList.value = alarmList.value?.filter { it.id != alarmModel.id }
 
         // todo  delete from database
-        appDAO.deleteAlarm(alarm.toAlarmEntity())
+        appDAO.deleteAlarm(alarmModel.toAlarmEntity())
 
         // todo cancel alarm with AlarmManager
+        alarmScheduler.cancelAlarm(alarmModel)
     }
 
     override suspend fun updateAlarm(alarm: AlarmModel) {
@@ -67,6 +74,20 @@ class AlarmRepositoryImpl @Inject constructor(
         alarm: AlarmModel,
         isActive: Boolean
     ) {
-        TODO("Not yet implemented")
+        val updatedAlarm = alarm.copy(isOn = isActive)
+        alarmList.value = alarmList.value?.map {
+            if (it.id == alarm.id) updatedAlarm else it
+        }
+
+        // todo update database
+        appDAO.deleteAlarm(alarm.toAlarmEntity())
+        appDAO.addAlarm(updatedAlarm.toAlarmEntity())
+
+        // todo change alarm with AlarmManager
+        if (isActive) {
+            alarmScheduler.scheduleAlarm(updatedAlarm)
+        } else {
+            alarmScheduler.cancelAlarm(updatedAlarm)
+        }
     }
 }

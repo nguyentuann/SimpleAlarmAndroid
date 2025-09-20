@@ -31,4 +31,10 @@ class ListAlarmViewModel @Inject constructor(
         }
     }
 
+    fun active(alarm: AlarmModel, isEnable: Boolean) {
+        viewModelScope.launch {
+            repository.activeAlarm(alarm, isEnable)
+        }
+    }
+
 }

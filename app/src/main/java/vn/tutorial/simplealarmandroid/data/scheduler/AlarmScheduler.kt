@@ -4,7 +4,9 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
+import vn.tutorial.simplealarmandroid.common.constants.Tag
 import vn.tutorial.simplealarmandroid.common.helpers.AlarmHelper
 import vn.tutorial.simplealarmandroid.domain.model.AlarmModel
 import vn.tutorial.simplealarmandroid.receiver.AlarmReceiver
@@ -24,6 +26,8 @@ class AlarmScheduler @Inject constructor(
             putExtra("ALARM_MINUTE", alarm.minute)
             putExtra("DAYS", alarm.dateOfWeek?.toIntArray())
         }
+        Log.d(Tag.scheduleAlarm, " tạo pending intent trong scheduler ${alarm.id}")
+
         return PendingIntent.getBroadcast(
             context,
             alarm.id.hashCode(),
@@ -34,7 +38,6 @@ class AlarmScheduler @Inject constructor(
 
     fun scheduleAlarm(alarm: AlarmModel) {
         // todo schedule alarm with AlarmManager
-
         val triggerTime: Long = when {
             alarm.dateOfWeek != null && alarm.date == null -> {
                 // Tìm ngày gần nhất
@@ -54,6 +57,8 @@ class AlarmScheduler @Inject constructor(
             triggerTime,
             getPendingIntent(alarm)
         )
+
+        Log.d(Tag.scheduleAlarm, "đặt báo thức trong scheduler ${alarm.id} at $triggerTime")
     }
 
     fun cancelAlarm(alarm: AlarmModel) {

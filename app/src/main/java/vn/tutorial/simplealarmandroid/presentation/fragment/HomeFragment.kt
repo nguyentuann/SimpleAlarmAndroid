@@ -42,7 +42,8 @@ class HomeFragment : Fragment() {
         // init adapter 1 lần
         alarmAdapter = AlarmAdapter(
             { alarm -> deleteAlarm(alarm) },
-            { alarm -> editAlarm(alarm) }
+            { alarm -> editAlarm(alarm) },
+            { alarm -> enableAlarm(alarm) }
         )
 
 
@@ -90,10 +91,15 @@ class HomeFragment : Fragment() {
                 listAlarmViewModel.delete(alarm)
             },
         )
-
     }
 
     private fun editAlarm(alarm: AlarmModel) {
         Log.d(Tag.AlarmTag, "Edit alarm call")
+    }
+
+
+    private fun enableAlarm(alarm: AlarmModel) {
+        Log.d(Tag.AlarmTag, "call enableAlarm: $alarm.isOn")
+        listAlarmViewModel.active(alarm, alarm.isOn)
     }
 }

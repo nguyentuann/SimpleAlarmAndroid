@@ -33,7 +33,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="32dp"
+                android:paddingVertical="32dp"
                 tools:ignore="UseCompoundDrawables">
 
                 <ImageView
@@ -45,11 +45,12 @@
                     app:tint="@color/white" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/open_sans_medium"
                     android:text="@string/description_btn_add"
+                    android:textAlignment="center"
                     android:textSize="18sp" />
 
             </LinearLayout>

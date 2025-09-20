@@ -2,8 +2,6 @@
     <string name="app_name">Alarm</string>
 
 
-
-
     <string name="appbar_title">My Alarms</string>
     <string name="timer">Timer</string>
     <string name="setting">Setting</string>
@@ -25,10 +23,11 @@
     <string name="am">AM</string>
     <string name="pm">PM</string>
     <string name="schedule_for">Schedule for %1$s</string>
+    <string name="stop">Stop</string>
+    <string name="this_string">This</string>
+    <string name="alarm">Alarm</string>
 
 
-
-    
     <string name="noDescription">No description</string>
     <string name="title_select_date">Select a future date for this alarm</string>
 

@@ -9,6 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import vn.tutorial.simplealarmandroid.data.local.dao.AppDAO
 import vn.tutorial.simplealarmandroid.data.local.db.AppDatabase
+import vn.tutorial.simplealarmandroid.receiver.AlarmReceiver
 import javax.inject.Singleton
 
 @Module

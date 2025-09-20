@@ -1,5 +1,6 @@
 package vn.tutorial.simplealarmandroid.presentation.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +13,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import vn.tutorial.simplealarmandroid.R
+import vn.tutorial.simplealarmandroid.common.constants.Tag
 import vn.tutorial.simplealarmandroid.common.helpers.AlarmHelper
+import vn.tutorial.simplealarmandroid.common.helpers.IconHelper
 import vn.tutorial.simplealarmandroid.common.helpers.TimeConverter
 import vn.tutorial.simplealarmandroid.domain.model.AlarmModel
 
 class AlarmAdapter(
     private val deleteAlarm: (AlarmModel) -> Unit,
-    private val editAlarm: (AlarmModel) -> Unit
+    private val editAlarm: (AlarmModel) -> Unit,
+    private val enableAlarm: (AlarmModel) -> Unit
+
 ) : ListAdapter<AlarmModel, AlarmAdapter.AlarmViewHolder>(DiffCallback) {
 
     inner class AlarmViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -32,6 +37,7 @@ class AlarmAdapter(
         val btnDelete: ImageButton = view.findViewById(R.id.btn_delete)
 
         fun bind(item: AlarmModel) {
+            Log.d(Tag.AlarmTag, "bind item")
             // set dữ liệu
             tvTime.text = TimeConverter.convertTimeToString(item.hour, item.minute)
             tvDates.text = TimeConverter.convertListDateToString(item.dateOfWeek)
@@ -39,14 +45,21 @@ class AlarmAdapter(
             nextAlarm.text = nextDateOfAlarm(item)
 
             imgDayNight.setImageResource(
-                if (item.hour in 6..18) R.drawable.ic_day else R.drawable.ic_night
+                IconHelper.getIconResourceForAlarm(item.hour)
             )
 
+            switchOnOff.setOnCheckedChangeListener(null)
             switchOnOff.isChecked = item.isOn
-
-            // đồng bộ trạng thái chọn
             listOf(card, imgDayNight, tvTime, tvDates, btnEdit, btnDelete).forEach {
                 it.isSelected = item.isOn
+            }
+            switchOnOff.setOnCheckedChangeListener { _, isChecked ->
+                Log.d(Tag.AlarmTag, "Switch checked: $isChecked")
+                item.isOn = isChecked
+                listOf(card, imgDayNight, tvTime, tvDates, btnEdit, btnDelete).forEach {
+                    it.isSelected = item.isOn
+                }
+                enableAlarm(item)
             }
 
             // gán sự kiện

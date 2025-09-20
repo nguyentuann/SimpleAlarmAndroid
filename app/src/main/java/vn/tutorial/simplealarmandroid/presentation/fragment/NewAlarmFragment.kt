@@ -54,6 +54,7 @@ class NewAlarmFragment : Fragment() {
         setupToolbar()
         setupButtons()
         observeViewModel()
+        popUpTimePicker()
 
         newAlarmFragment.tfMessage.setText(newAlarmViewModel.newAlarm.value?.message ?: "")
 
@@ -187,9 +188,7 @@ class NewAlarmFragment : Fragment() {
         button.backgroundTintList =
             ColorStateList.valueOf(ContextCompat.getColor(requireContext(), color))
 
-        button.backgroundTintList = ColorStateList.valueOf(
-            ContextCompat.getColor(requireContext(), color)
-        )
+
     }
 
     // todo lưu alarm

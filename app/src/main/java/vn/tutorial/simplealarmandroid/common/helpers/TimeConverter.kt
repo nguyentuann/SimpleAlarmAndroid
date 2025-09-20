@@ -1,9 +1,6 @@
 package vn.tutorial.simplealarmandroid.common.helpers
 
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 
 object TimeConverter {
     fun convertTimeToString(hour: Int, minute: Int): String {
@@ -52,7 +49,6 @@ object TimeConverter {
             cal.get(Calendar.YEAR)
         )
     }
-
 
 }
 
