@@ -1,8 +1,36 @@
 <resources>
-    <string name="app_name">SimpleAlarmAndroid</string>
+    <string name="app_name">Alarm</string>
+
+
     <string name="appbar_title">My Alarms</string>
     <string name="timer">Timer</string>
     <string name="setting">Setting</string>
     <string name="quick_alarm">Quick Alarm</string>
     <string name="add">Add</string>
+    <string name="description_btn_add">Tap here to create an alarm</string>
+    <string name="new_alarm">New Alarm</string>
+    <string name="edit_alarm">Edit Alarm</string>
+    <string name="schedule_alarm">Schedule Alarm </string>
+    <string name="message_placeholder">Enter an alarm message</string>
+    <string name="default_text">Default</string>
+    <string name="save">Save</string>
+    <string name="sunday">Sun</string>
+    <string name="monday">Mon</string>
+    <string name="tuesday">Tue</string>
+    <string name="wednesday">Wed</string>
+    <string name="thursday">Thu</string>
+    <string name="friday">Fri</string>
+    <string name="saturday">Sat</string>
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
+    <string name="schedule_for">Schedule for %1$s</string>
+    <string name="stop">Stop</string>
+    <string name="this_string">This</string>
+    <string name="alarm">Alarm</string>
+
+
+    <string name="noDescription">No description</string>
+    <string name="title_select_date">Select a future date for this alarm</string>
+
+
 </resources>
