@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Timer display -->
+    <TextView
+        android:id="@+id/tvTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:05:00"
+        android:textSize="48sp"
+        android:textStyle="bold" />
+
+    <!-- Quick buttons -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn5"
+            style="@style/btnChooseDate"
+            android:text="@string/_5m" />
+
+        <Button
+            android:id="@+id/btn10"
+            style="@style/btnChooseDate"
+            android:text="@string/_10m" />
+
+        <Button
+            android:id="@+id/btn15"
+            style="@style/btnChooseDate"
+            android:text="@string/_15m" />
+
+        <Button
+            android:id="@+id/btn30"
+            style="@style/btnChooseDate"
+            android:text="@string/_30m" />
+
+        <Button
+            android:id="@+id/btn45"
+            style="@style/btnChooseDate"
+            android:text="@string/_45m" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        >
+
+        <Button
+            android:id="@+id/btn_reset_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/btn_border"
+            android:backgroundTint="@color/red"
+            android:textColor="@color/white"
+            android:text="@string/reset" />
+
+
+        <Button
+            android:id="@+id/btn_start_timer"
+            android:layout_marginStart="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/btn_border"
+            android:textColor="@color/white"
+            android:text="@string/start" />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
