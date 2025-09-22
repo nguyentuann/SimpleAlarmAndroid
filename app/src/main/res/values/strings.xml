@@ -33,8 +33,6 @@
     <string name="title_select_date">Select a future date for this alarm</string>
 
     <string name="timer_stopwatch"><![CDATA[Timer & Stopwatch]]></string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="start">START</string>
     <string name="lap">LAP</string>
     <string name="_5m">5m</string>
@@ -45,6 +43,11 @@
     <string name="reset">RESET</string>
     <string name="index">Index</string>
     <string name="time">Time</string>
+    <string name="settings">Settings</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="language">Language</string>
+
+    <string name="change_language">Language changed</string>
 
 
 </resources>
