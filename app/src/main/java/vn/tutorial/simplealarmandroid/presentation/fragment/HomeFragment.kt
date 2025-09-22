@@ -67,6 +67,10 @@ class HomeFragment : Fragment() {
             (activity as MainActivity).timerStopWatch()
         }
 
+        homeFragment.toolBar.toolBarSetting.setOnClickListener {
+            (activity as MainActivity).setting()
+        }
+
         // quan sát dữ liệu
         listAlarmViewModel.alarmList.observe(viewLifecycleOwner) { alarms ->
             if (!alarms.isNullOrEmpty()) {

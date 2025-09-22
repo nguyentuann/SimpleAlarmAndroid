@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Alarm</string>
+    <string name="appbar_title">Báo thức của tôi</string>
+    <string name="timer">Hẹn giờ</string>
+    <string name="setting">Cài đặt</string>
+    <string name="quick_alarm">Báo thức nhanh</string>
+    <string name="add">Thêm</string>
+    <string name="description_btn_add">Chạm vào đây để tạo báo thức</string>
+    <string name="new_alarm">Báo thức mới</string>
+    <string name="edit_alarm">Chỉnh sửa báo thức</string>
+    <string name="schedule_alarm">Lên lịch báo thức</string>
+    <string name="message_placeholder">Nhập tin nhắn báo thức</string>
+    <string name="default_text">Mặc định</string>
+    <string name="save">Lưu</string>
+    <string name="sunday">CN</string>
+    <string name="monday">T2</string>
+    <string name="tuesday">T3</string>
+    <string name="wednesday">T4</string>
+    <string name="thursday">T5</string>
+    <string name="friday">T6</string>
+    <string name="saturday">T7</string>
+    <string name="am">SA</string>
+    <string name="pm">CH</string>
+    <string name="schedule_for">Lên lịch cho %1$s</string>
+    <string name="stop">Dừng</string>
+    <string name="this_string">Lại</string>
+    <string name="alarm">Báo thức</string>
+    <string name="noDescription">Không có mô tả</string>
+    <string name="title_select_date">Chọn ngày trong tương lai cho báo thức này</string>
+    <string name="timer_stopwatch"><![CDATA[Hẹn giờ & Đồng hồ bấm giờ]]></string>
+    <string name="start">BẮT ĐẦU</string>
+    <string name="lap">CHỤP</string>
+    <string name="_5m">5p</string>
+    <string name="_10m">10p</string>
+    <string name="_15m">15p</string>
+    <string name="_30m">30p</string>
+    <string name="_45m">45p</string>
+    <string name="reset">ĐẶT LẠI</string>
+    <string name="index">Thứ tự</string>
+    <string name="time">Thời gian</string>
+    <string name="settings">Cài đặt</string>
+    <string name="dark_mode">Chế độ tối</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="change_language">Đã thay đổi ngôn ngữ</string>
+
+
+</resources>

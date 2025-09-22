@@ -1,14 +1,15 @@
 package vn.tutorial.simplealarmandroid
 
+import android.content.Context
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import vn.tutorial.simplealarmandroid.common.helpers.setAppLocale
 import vn.tutorial.simplealarmandroid.presentation.fragment.HomeFragment
 import vn.tutorial.simplealarmandroid.presentation.fragment.NewAlarmFragment
+import vn.tutorial.simplealarmandroid.presentation.fragment.SettingFragment
 import vn.tutorial.simplealarmandroid.presentation.fragment.TimerStopWatchFragment
-import vn.tutorial.simplealarmandroid.presentation.viewModel.ListAlarmViewModel
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -16,15 +17,21 @@ class MainActivity : AppCompatActivity() {
     lateinit var homeFragment: HomeFragment
     lateinit var newAlarmFragment: NewAlarmFragment
     lateinit var timerStopWatchFragment: TimerStopWatchFragment
-    private val alarmViewModel by viewModels<ListAlarmViewModel>()
+    lateinit var settingFragment: SettingFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val prefs = getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+        val lang = prefs.getString("app_language", "en") ?: "en"
+        setAppLocale(lang)
+
         setContentView(R.layout.activity_main)
 
         homeFragment = HomeFragment()
         newAlarmFragment = NewAlarmFragment()
         timerStopWatchFragment = TimerStopWatchFragment()
+        settingFragment = SettingFragment()
 
         changeFragment(homeFragment)
     }
@@ -35,6 +42,10 @@ class MainActivity : AppCompatActivity() {
 
     fun timerStopWatch() {
         changeFragment(timerStopWatchFragment)
+    }
+
+    fun setting() {
+        changeFragment(settingFragment)
     }
 
     fun changeFragment(fragment: Fragment) {
