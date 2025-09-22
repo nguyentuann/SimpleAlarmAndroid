@@ -62,6 +62,11 @@ class HomeFragment : Fragment() {
             (activity as MainActivity).addNewAlarm()
         }
 
+        // chuyển sang timer stopwatch
+        homeFragment.toolBar.toolBarTimer.setOnClickListener {
+            (activity as MainActivity).timerStopWatch()
+        }
+
         // quan sát dữ liệu
         listAlarmViewModel.alarmList.observe(viewLifecycleOwner) { alarms ->
             if (!alarms.isNullOrEmpty()) {
@@ -101,7 +106,6 @@ class HomeFragment : Fragment() {
             .addToBackStack(null)
             .commit()
     }
-
 
     private fun enableAlarm(alarm: AlarmModel) {
         Log.d(Tag.AlarmTag, "call enableAlarm: $alarm.isOn")
