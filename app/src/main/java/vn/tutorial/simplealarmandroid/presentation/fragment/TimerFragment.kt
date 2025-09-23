@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import vn.tutorial.simplealarmandroid.databinding.FragmentTimerBinding
 import vn.tutorial.simplealarmandroid.R
+import vn.tutorial.simplealarmandroid.databinding.FragmentTimerBinding
 
 class TimerFragment : Fragment() {
 
@@ -25,7 +25,11 @@ class TimerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTimerBinding.inflate(inflater, container, false)
-        val view = binding.root
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         updateTimerText(timerMillis)
         updateResetButtonState()
@@ -50,6 +54,7 @@ class TimerFragment : Fragment() {
             if (isRunning) {
                 pauseTimer()
             } else {
+                updateTimeFromInput()
                 startTimer()
             }
             updateResetButtonState()
@@ -64,8 +69,6 @@ class TimerFragment : Fragment() {
             updateResetButtonState()
         }
 
-
-        return view
     }
 
     private fun startTimer() {
@@ -99,20 +102,38 @@ class TimerFragment : Fragment() {
         val hours = millis / 1000 / 3600
         val minutes = (millis / 1000 % 3600) / 60
         val seconds = millis / 1000 % 60
-        binding.tvTimer.text = String.format("%02d:%02d:%02d", hours, minutes, seconds)
-    }
 
+        // Giờ: chỉ hiển thị khi > 0, còn lại để trống
+        if (hours > 0) {
+            binding.etHours.setText(String.format("%02d", hours))
+        } else {
+            binding.etHours.setText("00")
+        }
+
+        // Luôn hiển thị phút và giây
+        binding.etMinutes.setText(String.format("%02d", minutes))
+        binding.etSeconds.setText(String.format("%02d", seconds))
+    }
 
     private fun updateResetButtonState() {
         if (isRunning) {
             binding.btnResetTimer.isEnabled = false
-            binding.btnResetTimer.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.dark_grey))
+            binding.btnResetTimer.backgroundTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.dark_grey))
         } else {
             binding.btnResetTimer.isEnabled = true
-            binding.btnResetTimer.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.red))
+            binding.btnResetTimer.backgroundTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.red))
         }
     }
 
+    private fun updateTimeFromInput() {
+        val hours = binding.etHours.text.toString().toIntOrNull() ?: 0
+        val minutes = binding.etMinutes.text.toString().toIntOrNull() ?: 0
+        val seconds = binding.etSeconds.text.toString().toIntOrNull() ?: 0
+
+        timerMillis = (hours * 3600 + minutes * 60 + seconds) * 1000L
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
