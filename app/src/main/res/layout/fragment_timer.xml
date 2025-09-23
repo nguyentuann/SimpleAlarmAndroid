@@ -6,13 +6,63 @@
     android:padding="16dp">
 
     <!-- Timer display -->
-    <TextView
-        android:id="@+id/tvTimer"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="00:05:00"
-        android:textSize="48sp"
-        android:textStyle="bold" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:gravity="center"
+            android:hint="00"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="2"
+            android:textSize="36sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="4dp"
+            android:text=":"
+            android:textSize="36sp" />
+
+        <EditText
+            android:id="@+id/et_minutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:gravity="center"
+            android:hint="00"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="2"
+            android:textSize="36sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="4dp"
+            android:text=":"
+            android:textSize="36sp" />
+
+        <EditText
+            android:id="@+id/et_seconds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:gravity="center"
+            android:hint="00"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="2"
+            android:textSize="36sp" />
+
+    </LinearLayout>
 
     <!-- Quick buttons -->
     <LinearLayout
@@ -50,9 +100,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        >
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
 
         <Button
             android:id="@+id/btn_reset_timer"
@@ -61,20 +110,19 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/btn_border"
             android:backgroundTint="@color/red"
-            android:textColor="@color/white"
-            android:text="@string/reset" />
+            android:text="@string/reset"
+            android:textColor="@color/white" />
 
 
         <Button
             android:id="@+id/btn_start_timer"
-            android:layout_marginStart="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/btn_border"
-            android:textColor="@color/white"
-            android:text="@string/start" />
-
+            android:text="@string/start"
+            android:textColor="@color/white" />
 
 
     </LinearLayout>

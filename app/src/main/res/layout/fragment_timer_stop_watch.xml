@@ -28,7 +28,9 @@
         app:tabTextColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicator="@drawable/tab_indicator"
+        app:tabIndicatorColor="@color/orange"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="3dp"
         >
 
     </com.google.android.material.tabs.TabLayout>
