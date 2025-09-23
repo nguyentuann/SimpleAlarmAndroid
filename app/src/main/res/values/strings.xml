@@ -33,6 +33,7 @@
     <string name="title_select_date">Select a future date for this alarm</string>
 
     <string name="timer_stopwatch"><![CDATA[Timer & Stopwatch]]></string>
+    <string name="stopwatch">Stopwatch</string>
     <string name="start">START</string>
     <string name="lap">LAP</string>
     <string name="_5m">5m</string>

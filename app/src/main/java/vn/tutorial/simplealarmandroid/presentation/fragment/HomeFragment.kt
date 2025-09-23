@@ -71,6 +71,10 @@ class HomeFragment : Fragment() {
             (activity as MainActivity).setting()
         }
 
+        homeFragment.toolBar.toolBarQuick.setOnClickListener {
+            (activity as MainActivity).quickAlarm()
+        }
+
         // quan sát dữ liệu
         listAlarmViewModel.alarmList.observe(viewLifecycleOwner) { alarms ->
             if (!alarms.isNullOrEmpty()) {
