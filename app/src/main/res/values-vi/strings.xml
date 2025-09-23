@@ -29,8 +29,9 @@
     <string name="noDescription">Không có mô tả</string>
     <string name="title_select_date">Chọn ngày trong tương lai cho báo thức này</string>
     <string name="timer_stopwatch"><![CDATA[Hẹn giờ & Đồng hồ bấm giờ]]></string>
+    <string name="stopwatch">Đồng hồ bấm giờ</string>
     <string name="start">BẮT ĐẦU</string>
-    <string name="lap">CHỤP</string>
+    <string name="lap">BẤM</string>
     <string name="_5m">5p</string>
     <string name="_10m">10p</string>
     <string name="_15m">15p</string>
