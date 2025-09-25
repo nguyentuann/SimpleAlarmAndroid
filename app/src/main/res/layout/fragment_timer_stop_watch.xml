@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".presentation.fragment.TimerStopWatchFragment">
+    tools:context=".ui.timer_stopwatch.TimerStopWatchFragment">
 
     <Toolbar
         android:id="@+id/tool_bar"

@@ -1,0 +1,20 @@
+package vn.tutorial.simplealarmandroid.components
+
+import android.app.AlertDialog
+import android.content.Context
+
+object CommonComponents {
+    fun confirmDialog(context: Context, title: String, message: String, onConfirm: () -> Unit) {
+        AlertDialog.Builder(context).apply {
+            setTitle(title)
+            setMessage(message)
+            setPositiveButton("Confirm") { dialog, _ ->
+                onConfirm()
+                dialog.dismiss()
+            }
+            setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+        }.show()
+    }
+}

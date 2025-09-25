@@ -7,15 +7,13 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import vn.tutorial.simplealarmandroid.data.local.dao.AppDAO
-import vn.tutorial.simplealarmandroid.data.local.db.AppDatabase
-import vn.tutorial.simplealarmandroid.receiver.AlarmReceiver
+import vn.tutorial.simplealarmandroid.local.dao.AppDAO
+import vn.tutorial.simplealarmandroid.local.db.AppDatabase
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {

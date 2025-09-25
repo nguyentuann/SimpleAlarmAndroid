@@ -5,12 +5,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
-import vn.tutorial.simplealarmandroid.common.helpers.setAppLocale
-import vn.tutorial.simplealarmandroid.presentation.fragment.HomeFragment
-import vn.tutorial.simplealarmandroid.presentation.fragment.NewAlarmFragment
-import vn.tutorial.simplealarmandroid.presentation.fragment.QuickAlarmFragment
-import vn.tutorial.simplealarmandroid.presentation.fragment.SettingFragment
-import vn.tutorial.simplealarmandroid.presentation.fragment.TimerStopWatchFragment
+import vn.tutorial.simplealarmandroid.helpers.setAppLocale
+import vn.tutorial.simplealarmandroid.ui.home.HomeFragment
+import vn.tutorial.simplealarmandroid.ui.alarm.NewAlarmFragment
+import vn.tutorial.simplealarmandroid.ui.alarm.QuickAlarmFragment
+import vn.tutorial.simplealarmandroid.ui.settings.SettingFragment
+import vn.tutorial.simplealarmandroid.ui.timer_stopwatch.TimerStopWatchFragment
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
