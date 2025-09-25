@@ -8,11 +8,12 @@
     app:flow_horizontalAlign="center"
     tools:context=".ui.alarm.NewAlarmFragment">
 
-    <Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/tool_bar_new_alarm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:navigationIcon="@drawable/ic_back">
+        app:navigationIcon="@drawable/ic_back"
+        app:navigationIconTint="@color/text">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_semi_bold"
                 android:text="@string/new_alarm"
-                android:textColor="@color/text_color"
+                android:textColor="@color/text"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -40,11 +41,12 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/text"
                 tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </Toolbar>
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,7 +58,7 @@
             android:id="@+id/card_view_edit_time"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:backgroundTint="@color/dark_blue"
+            android:backgroundTint="@color/secondary"
             app:cardCornerRadius="16dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -71,25 +73,24 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="88dp"
                     android:text="00:00 AM"
+                    android:textAlignment="center"
                     android:textColor="@android:color/white"
                     android:textSize="40sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:textAlignment="center"
                     app:layout_constraintVertical_bias="1.0" />
 
                 <ImageButton
                     android:id="@+id/btn_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/transparent"
                     android:backgroundTint="@android:color/transparent"
                     android:src="@drawable/ic_edit"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/white"
+                    app:tint="@color/text"
                     tools:ignore="ContentDescription" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -148,8 +149,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/btn_calendar"
             style="@style/AddAlarmConstraintLayoutStyle"
-            android:layout_marginTop="24dp"
-            >
+            android:layout_marginTop="24dp">
 
             <ImageView
                 android:id="@+id/icon_calendar"
@@ -162,7 +162,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                app:tint="@color/text" />
 
             <TextView
                 android:id="@+id/schedule_alarm"
@@ -170,7 +171,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/schedule_alarm"
-                android:textColor="@color/text_color"
+                android:textColor="@color/text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/icon_calendar"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -184,13 +185,13 @@
                 android:src="@drawable/ic_add_circle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/text" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            style="@style/AddAlarmConstraintLayoutStyle">
+        <androidx.constraintlayout.widget.ConstraintLayout style="@style/AddAlarmConstraintLayoutStyle">
 
             <ImageButton
                 android:id="@+id/label"
@@ -202,23 +203,22 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/light_blue" />
+                app:tint="@color/primary" />
 
             <EditText
                 android:id="@+id/tf_message"
                 style="@style/CustomEditTextStyle"
                 android:autofillHints="name"
                 android:hint="@string/message_placeholder"
-                android:text=""
                 android:inputType="text"
+                android:text=""
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/label"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            style="@style/AddAlarmConstraintLayoutStyle">
+        <androidx.constraintlayout.widget.ConstraintLayout style="@style/AddAlarmConstraintLayoutStyle">
 
             <ImageButton
                 android:id="@+id/music"
@@ -230,7 +230,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/light_blue" />
+                app:tint="@color/primary" />
 
             <EditText
                 android:id="@+id/btn_music"
@@ -239,7 +239,7 @@
                 android:enabled="false"
                 android:inputType="text"
                 android:text="@string/default_text"
-                android:textColor="@color/text_color"
+                android:textColor="@color/text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/music"

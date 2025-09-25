@@ -15,7 +15,7 @@
         android:textSize="16sp"
         android:text="Monday"
         android:fontFamily="@font/open_sans_semi_bold"
-        android:textColor="@color/text_color"
+        android:textColor="@color/text"
         />
 
     <androidx.cardview.widget.CardView

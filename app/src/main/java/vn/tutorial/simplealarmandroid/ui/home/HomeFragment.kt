@@ -11,11 +11,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import vn.tutorial.simplealarmandroid.MainActivity
 import vn.tutorial.simplealarmandroid.R
 import vn.tutorial.simplealarmandroid.components.CommonComponents
-import vn.tutorial.simplealarmandroid.databinding.FragmentHomeBinding
 import vn.tutorial.simplealarmandroid.data.model.AlarmModel
-import vn.tutorial.simplealarmandroid.viewModel.ListAlarmViewModel
+import vn.tutorial.simplealarmandroid.databinding.FragmentHomeBinding
 import vn.tutorial.simplealarmandroid.ui.alarm.AlarmAdapter
 import vn.tutorial.simplealarmandroid.ui.alarm.NewAlarmFragment
+import vn.tutorial.simplealarmandroid.viewModel.ListAlarmViewModel
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -96,8 +96,8 @@ class HomeFragment : Fragment() {
     private fun deleteAlarm(alarm: AlarmModel) {
         CommonComponents.confirmDialog(
             requireContext(),
-            "Delete Alarm",
-            "Are you sure to delete this alarm?",
+            getString(R.string.delete_alarm),
+            getString(R.string.delete_alarm_message),
             onConfirm = {
                 listAlarmViewModel.delete(alarm)
             },

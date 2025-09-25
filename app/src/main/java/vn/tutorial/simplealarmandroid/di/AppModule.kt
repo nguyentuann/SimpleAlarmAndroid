@@ -9,6 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import vn.tutorial.simplealarmandroid.local.dao.AppDAO
 import vn.tutorial.simplealarmandroid.local.db.AppDatabase
+import vn.tutorial.simplealarmandroid.local.db.AppPreferences
 import javax.inject.Singleton
 
 @Module
@@ -29,6 +30,12 @@ object AppModule {
     @Singleton
     fun provideAppDAO(database: AppDatabase): AppDAO {
         return database.appDAO()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppPreferences(@ApplicationContext context: Context): AppPreferences {
+        return AppPreferences(context)
     }
 }
 

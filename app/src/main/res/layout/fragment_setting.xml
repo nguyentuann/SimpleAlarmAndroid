@@ -7,48 +7,26 @@
     android:orientation="vertical"
     tools:context=".ui.settings.SettingFragment">
 
-    <Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:navigationIcon="@drawable/ic_back">
+        app:navigationIcon="@drawable/ic_back"
+        app:navigationIconTint="@color/text">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings"
-            android:textColor="@color/text_color"
+            android:textColor="@color/text"
             android:textSize="24sp" />
-    </Toolbar>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:visibility="gone"
-        >
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/dark_mode"
-            android:textColor="@color/text_color"
-            android:textSize="18sp" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch_mode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="4dp" />
-    </LinearLayout>
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginHorizontal="16dp"
-        app:dividerColor="@color/light_grey" />
+        app:dividerColor="@color/surface" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/language"
-            android:textColor="@color/text_color"
+            android:textColor="@color/text"
             android:textSize="18sp" />
 
         <ImageButton
@@ -71,7 +49,8 @@
             android:backgroundTint="@color/transparent"
             android:contentDescription="@string/noDescription"
             android:paddingVertical="0dp"
-            android:src="@drawable/ic_right" />
+            android:src="@drawable/ic_right"
+            app:tint="@color/text" />
 
 
     </LinearLayout>
@@ -80,6 +59,37 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginHorizontal="16dp"
-        app:dividerColor="@color/light_grey" />
+        app:dividerColor="@color/surface" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/theme"
+            android:textColor="@color/text"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/btn_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/transparent"
+            android:contentDescription="@string/noDescription"
+            android:paddingVertical="0dp"
+            android:src="@drawable/ic_right"
+            app:tint="@color/text" />
+    </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="16dp"
+        app:dividerColor="@color/surface" />
 
 </LinearLayout>

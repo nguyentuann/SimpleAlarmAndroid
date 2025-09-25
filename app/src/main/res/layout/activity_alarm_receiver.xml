@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_semi_bold"
             android:text="02:00"
-            android:textColor="@color/text_color"
+            android:textColor="@color/text"
             android:textSize="60sp" />
     </LinearLayout>
 

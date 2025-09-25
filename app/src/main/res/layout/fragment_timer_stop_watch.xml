@@ -7,28 +7,29 @@
     android:orientation="vertical"
     tools:context=".ui.timer_stopwatch.TimerStopWatchFragment">
 
-    <Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:navigationIcon="@drawable/ic_back">
+        app:navigationIconTint="@color/text"
+        app:navigationIcon="@drawable/ic_back">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/timer_stopwatch"
             android:textSize="24sp"
-            android:textColor="@color/text_color"
+            android:textColor="@color/text"
             />
-    </Toolbar>
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab"
-        android:background="@color/light_blue"
-        app:tabTextColor="@color/white"
+        android:background="@color/primary"
+        app:tabTextColor="@color/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicatorColor="@color/orange"
+        app:tabIndicatorColor="@color/surface"
         app:tabIndicatorFullWidth="false"
         app:tabIndicatorHeight="3dp"
         >

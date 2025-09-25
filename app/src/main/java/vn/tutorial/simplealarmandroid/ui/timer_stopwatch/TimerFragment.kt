@@ -119,11 +119,11 @@ class TimerFragment : Fragment() {
         if (isRunning) {
             binding.btnResetTimer.isEnabled = false
             binding.btnResetTimer.backgroundTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.dark_grey))
+                ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.surface))
         } else {
             binding.btnResetTimer.isEnabled = true
             binding.btnResetTimer.backgroundTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.red))
+                ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.primary))
         }
     }
 
