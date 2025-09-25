@@ -2,8 +2,8 @@ package vn.tutorial.simplealarmandroid.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import vn.tutorial.simplealarmandroid.common.helpers.AlarmHelper
-import vn.tutorial.simplealarmandroid.domain.model.AlarmModel
+import vn.tutorial.simplealarmandroid.data.model.AlarmModel
+import vn.tutorial.simplealarmandroid.helpers.AlarmHelper
 
 @Entity(tableName = "alarm")
 class AlarmEntity(

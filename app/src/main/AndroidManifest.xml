@@ -18,7 +18,7 @@
         android:theme="@style/Theme.SimpleAlarmAndroid"
         tools:targetApi="33">
         <activity
-            android:name=".presentation.activity.AlarmReceiverActivity"
+            android:name=".ui.alarm.AlarmReceiverActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -32,7 +32,7 @@
         </activity>
 
         <receiver
-            android:name=".receiver.AlarmReceiver"
+            android:name=".ui.alarm.AlarmReceiver"
             android:exported="true" />
 
     </application>
