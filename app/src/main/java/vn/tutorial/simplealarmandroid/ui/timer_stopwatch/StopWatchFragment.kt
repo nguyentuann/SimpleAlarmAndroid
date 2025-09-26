@@ -1,6 +1,5 @@
 package vn.tutorial.simplealarmandroid.ui.timer_stopwatch
 
-import vn.tutorial.simplealarmandroid.ui.timer_stopwatch.LapListAdapter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import vn.tutorial.simplealarmandroid.R
 import vn.tutorial.simplealarmandroid.databinding.FragmentStopWatchBinding
 
 class StopwatchFragment : Fragment() {
@@ -70,14 +70,14 @@ class StopwatchFragment : Fragment() {
     private fun startStopwatch() {
         handler.post(runnable)
         isRunning = true
-        binding.btnStartStopwatch.text = "PAUSE"
+        binding.btnStartStopwatch.text = getString(R.string.pause)
         updateLapButton()
     }
 
     private fun pauseStopwatch() {
         handler.removeCallbacks(runnable)
         isRunning = false
-        binding.btnStartStopwatch.text = "START"
+        binding.btnStartStopwatch.text = getString(R.string.start)
         updateLapButton()
     }
 
@@ -92,10 +92,10 @@ class StopwatchFragment : Fragment() {
 
     private fun updateLapButton() {
         if (isRunning) {
-            binding.btnLap.text = "LAP"
+            binding.btnLap.text = getString(R.string.lap)
             binding.btnLap.isEnabled = true
         } else {
-            binding.btnLap.text = "RESET"
+            binding.btnLap.text = getString(R.string.reset)
             binding.btnLap.isEnabled = true
         }
     }
@@ -109,7 +109,7 @@ class StopwatchFragment : Fragment() {
             elapsedMillis % 1000
         )
         laps.add(lapTime)
-        lapAdapter.notifyItemInserted(laps.size-1)
+        lapAdapter.notifyItemInserted(laps.size - 1)
         binding.lapList.scrollToPosition(laps.size)
     }
 

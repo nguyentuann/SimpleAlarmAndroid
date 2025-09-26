@@ -41,9 +41,21 @@
     <string name="index">Thứ tự</string>
     <string name="time">Thời gian</string>
     <string name="settings">Cài đặt</string>
-    <string name="dark_mode">Chế độ tối</string>
     <string name="language">Ngôn ngữ</string>
     <string name="change_language">Đã thay đổi ngôn ngữ</string>
+    <string name="change_theme">Đã thay đổi giao diện</string>
+    <string name="theme">Giao diện</string>
+    <string name="light">Sáng</string>
+    <string name="dark">Tối</string>
+
+    <string name="discard_change">Bỏ qua thay đổi?</string>
+    <string name="discard_change_message">Bạn có các thay đổi chưa được lưu. Bạn có chắc chắn muốn bỏ qua chúng không?</string>
+    <string name="delete_alarm">Xóa báo thức</string>
+    <string name="delete_alarm_message">Bạn có chắc chắn muốn xóa báo thức này không?</string>
+    <string name="cancel">Hủy</string>
+    <string name="confirm">Xác nhận</string>
+
+    <string name="pause">DỪNG</string>
 
 
 </resources>

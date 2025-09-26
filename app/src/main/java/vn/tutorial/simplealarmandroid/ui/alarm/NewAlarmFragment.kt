@@ -157,7 +157,7 @@ class NewAlarmFragment : Fragment() {
     }
 
     private fun updateDayButton(button: Button, selected: Boolean) {
-        val color = if (selected) R.color.light_blue else R.color.dark_blue
+        val color = if (selected) R.color.primary else R.color.secondary
         button.backgroundTintList =
             ColorStateList.valueOf(ContextCompat.getColor(requireContext(), color))
     }
@@ -210,8 +210,8 @@ class NewAlarmFragment : Fragment() {
         ) {
             CommonComponents.confirmDialog(
                 requireContext(),
-                "Discard changes?",
-                "You have unsaved changes. Are you sure you want to discard them?",
+                getString(R.string.discard_change),
+                getString(R.string.discard_change_message),
                 onConfirm = { activity?.onBackPressedDispatcher?.onBackPressed() }
             )
         } else activity?.onBackPressedDispatcher?.onBackPressed()

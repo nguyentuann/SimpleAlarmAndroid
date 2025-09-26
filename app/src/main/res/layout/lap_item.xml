@@ -33,7 +33,7 @@
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        app:dividerColor="@color/light_grey" />
+        app:dividerColor="@color/secondary" />
 
 </LinearLayout>
 

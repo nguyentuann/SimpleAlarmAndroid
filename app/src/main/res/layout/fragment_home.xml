@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             android:layout_marginTop="80dp"
-            android:backgroundTint="@color/light_grey">
+            android:backgroundTint="@color/surface">
 
             <LinearLayout
                 android:id="@+id/empty_view"
@@ -42,7 +42,7 @@
                     android:background="@drawable/btn_circle"
                     android:contentDescription="@string/add"
                     android:src="@drawable/ic_add"
-                    app:tint="@color/white" />
+                    app:tint="@color/background" />
 
                 <TextView
                     android:layout_width="match_parent"

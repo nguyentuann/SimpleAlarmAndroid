@@ -61,7 +61,7 @@ class AlarmReceiverActivity : AppCompatActivity() {
             btn.isEnabled = false
             stop += 1
             btn.backgroundTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.light_blue))
+                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary))
 
             if (stop == 3) {
                 ringtone.stop()

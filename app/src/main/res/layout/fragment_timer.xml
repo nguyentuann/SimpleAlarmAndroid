@@ -109,9 +109,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:background="@drawable/btn_border"
-            android:backgroundTint="@color/red"
+            android:backgroundTint="@color/primary"
             android:text="@string/reset"
-            android:textColor="@color/white" />
+            android:textColor="@color/text" />
 
 
         <Button
@@ -122,7 +122,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/btn_border"
             android:text="@string/start"
-            android:textColor="@color/white" />
+            android:textColor="@color/text" />
 
 
     </LinearLayout>

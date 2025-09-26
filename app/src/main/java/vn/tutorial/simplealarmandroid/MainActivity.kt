@@ -1,19 +1,23 @@
 package vn.tutorial.simplealarmandroid
 
-import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import vn.tutorial.simplealarmandroid.helpers.setAppLocale
-import vn.tutorial.simplealarmandroid.ui.home.HomeFragment
+import vn.tutorial.simplealarmandroid.local.db.AppPreferences
 import vn.tutorial.simplealarmandroid.ui.alarm.NewAlarmFragment
 import vn.tutorial.simplealarmandroid.ui.alarm.QuickAlarmFragment
+import vn.tutorial.simplealarmandroid.ui.home.HomeFragment
 import vn.tutorial.simplealarmandroid.ui.settings.SettingFragment
 import vn.tutorial.simplealarmandroid.ui.timer_stopwatch.TimerStopWatchFragment
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    @Inject
+    lateinit var appPrefs: AppPreferences
 
     lateinit var homeFragment: HomeFragment
     lateinit var newAlarmFragment: NewAlarmFragment
@@ -24,9 +28,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val prefs = getSharedPreferences("app_settings", Context.MODE_PRIVATE)
-        val lang = prefs.getString("app_language", "en") ?: "en"
-        setAppLocale(lang)
+        AppCompatDelegate.setDefaultNightMode(appPrefs.appTheme)
+        setAppLocale(appPrefs.appLanguage)
 
         setContentView(R.layout.activity_main)
 

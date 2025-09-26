@@ -33,7 +33,8 @@
 
         <receiver
             android:name=".ui.alarm.AlarmReceiver"
-            android:exported="true" />
+            android:exported="true"
+            android:permission="TODO" />
 
     </application>
 
