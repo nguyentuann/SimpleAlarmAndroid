@@ -19,6 +19,7 @@ class AlarmScheduler @Inject constructor(
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             putExtra("ALARM_ID", alarm.id)
             putExtra("ALARM_MESSAGE", alarm.message)
+            putExtra("ALARM_SOUND", alarm.sound)
             putExtra("ALARM_HOUR", alarm.hour)
             putExtra("ALARM_MINUTE", alarm.minute)
             putExtra("DAYS", alarm.dateOfWeek?.toIntArray())

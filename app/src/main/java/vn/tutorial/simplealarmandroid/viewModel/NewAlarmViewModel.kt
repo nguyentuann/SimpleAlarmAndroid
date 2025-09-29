@@ -22,6 +22,7 @@ class NewAlarmViewModel @Inject constructor() : ViewModel() {
             minute = 0,
             isOn = true,
             message = null,
+            sound = null,
             dateOfWeek = null,
             date = null
         )
@@ -44,6 +45,10 @@ class NewAlarmViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    fun updateSound(sound: Int?) {
+        _newAlarm.value = _newAlarm.value?.copy(sound = sound)
+    }
+
     fun updateDateOfWeek(dateOfWeek: List<Int>?) {
         _newAlarm.value = _newAlarm.value?.copy(dateOfWeek = dateOfWeek)
     }
@@ -59,12 +64,13 @@ class NewAlarmViewModel @Inject constructor() : ViewModel() {
             minute = 0,
             isOn = true,
             message = null,
+            sound = null,
             dateOfWeek = null,
             date = null
         )
     }
 
-    fun prepareAlarmBeforeSave(selectedDays: Set<Int>, message: String) {
+    fun prepareAlarmBeforeSave(selectedDays: Set<Int>, message: String, sound: Int) {
         val alarm = _newAlarm.value ?: return
 
         when {
@@ -74,6 +80,7 @@ class NewAlarmViewModel @Inject constructor() : ViewModel() {
         }
 
         updateMessage(message)
+        updateSound(sound)
     }
 
     fun isChange(): Boolean {
@@ -83,6 +90,7 @@ class NewAlarmViewModel @Inject constructor() : ViewModel() {
             minute = 0,
             isOn = true,
             message = null,
+            sound = null,
             dateOfWeek = null,
             date = null
         )

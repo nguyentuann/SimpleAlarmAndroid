@@ -57,5 +57,12 @@
 
     <string name="pause">DỪNG</string>
 
+    <string name="select_tone">Chọn âm báo</string>
+    <string name="default_tone">Âm thanh mặc định</string>
+    <string name="clock_tone">Âm thanh đồng hồ</string>
+    <string name="ring_tone">Âm thanh ring</string>
+    <string name="school_tone">Âm thanh trường học</string>
+    <string name="trumpet_tone">Âm thanh Trumpet</string>
+
 
 </resources>

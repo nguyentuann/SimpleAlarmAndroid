@@ -63,6 +63,13 @@
     <string name="delete_alarm_message">Are you sure to delete this alarm?</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
+    
+    <string name="select_tone">Choose Sound</string>
+    <string name="default_tone">Default Tone</string>
+    <string name="clock_tone">Clock Tone</string>
+    <string name="ring_tone">Ring Tone</string>
+    <string name="school_tone">School Tone</string>
+    <string name="trumpet_tone">Trumpet Tone</string>
 
 
 </resources>

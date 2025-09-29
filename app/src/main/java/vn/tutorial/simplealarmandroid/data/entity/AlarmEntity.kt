@@ -13,6 +13,7 @@ class AlarmEntity(
     val minute: Int,
     val isOn: Boolean,
     val message: String? = null,
+    val sound: Int? = null,
     val dateOfWeek: Int? = null,
     val date: Long? = null
 )
@@ -24,6 +25,7 @@ fun AlarmEntity.toAlarmModel(): AlarmModel {
         minute = minute,
         isOn = isOn,
         message = message,
+        sound = sound,
         dateOfWeek = if (dateOfWeek == null) null else AlarmHelper.fromBitToList(dateOfWeek),
         date = date
     )
@@ -36,6 +38,7 @@ fun AlarmModel.toAlarmEntity(): AlarmEntity {
         minute = minute,
         isOn = isOn,
         message = message,
+        sound = sound,
         dateOfWeek = if (dateOfWeek == null) null else AlarmHelper.fromListToBit(dateOfWeek!!),
         date = date
     )
