@@ -232,14 +232,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/primary" />
 
-            <EditText
+            <TextView
                 android:id="@+id/btn_music"
                 style="@style/CustomEditTextStyle"
                 android:autofillHints="name"
-                android:enabled="false"
-                android:inputType="text"
-                android:text="@string/default_text"
+                android:text="@string/default_tone"
                 android:textColor="@color/text"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/music"

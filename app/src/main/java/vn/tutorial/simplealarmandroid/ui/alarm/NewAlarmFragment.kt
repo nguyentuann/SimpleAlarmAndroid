@@ -1,9 +1,12 @@
 package vn.tutorial.simplealarmandroid.ui.alarm
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.res.ColorStateList
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
@@ -18,12 +21,12 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import vn.tutorial.simplealarmandroid.R
 import vn.tutorial.simplealarmandroid.components.CommonComponents
+import vn.tutorial.simplealarmandroid.data.model.AlarmModel
 import vn.tutorial.simplealarmandroid.databinding.FragmentNewAlarmBinding
 import vn.tutorial.simplealarmandroid.helpers.AlarmHelper
-import vn.tutorial.simplealarmandroid.data.model.AlarmModel
+import vn.tutorial.simplealarmandroid.utils.TimeConverter
 import vn.tutorial.simplealarmandroid.viewModel.ListAlarmViewModel
 import vn.tutorial.simplealarmandroid.viewModel.NewAlarmViewModel
-import vn.tutorial.simplealarmandroid.utils.TimeConverter
 import java.util.Calendar
 
 @AndroidEntryPoint
@@ -35,6 +38,8 @@ class NewAlarmFragment : Fragment() {
     private val selectedDays = mutableSetOf<Int>()
     private val newAlarmViewModel by viewModels<NewAlarmViewModel>()
     private val listAlarmViewModel by activityViewModels<ListAlarmViewModel>()
+    private var mediaPlayer: MediaPlayer? = null
+    private var selectedIndex = -1
 
     // Map duy nhất để thao tác các ngày
     private val buttonsWithDays by lazy {
@@ -46,6 +51,16 @@ class NewAlarmFragment : Fragment() {
             binding.btnThu to 5,
             binding.btnFri to 6,
             binding.btnSat to 7,
+        )
+    }
+
+    private val soundList by lazy {
+        listOf(
+            getString(R.string.default_tone) to R.raw.base,
+            getString(R.string.clock_tone) to R.raw.clockalarm,
+            getString(R.string.ring_tone) to R.raw.ringtone,
+            getString(R.string.school_tone) to R.raw.schoolbell,
+            getString(R.string.trumpet_tone) to R.raw.terompetole
         )
     }
 
@@ -89,8 +104,14 @@ class NewAlarmFragment : Fragment() {
     }
 
     private fun setupButtons() {
-        binding.btnEdit.setOnClickListener { popUpTimePicker() }
+        binding.btnEdit.setOnClickListener {
+            popUpTimePicker()
+        }
         binding.btnCalendar.setOnClickListener { popUpDatePicker() }
+
+        binding.btnMusic.setOnClickListener {
+            popUpSoundPicker()
+        }
 
         buttonsWithDays.forEach { (button, dayOfWeek) ->
             button.setOnClickListener {
@@ -98,6 +119,8 @@ class NewAlarmFragment : Fragment() {
                 updateDayButton(button, isSelected)
             }
         }
+
+
 
         binding.btnSave.setOnClickListener { saveAlarm() }
         binding.icSave.setOnClickListener { saveAlarm() }
@@ -115,6 +138,56 @@ class NewAlarmFragment : Fragment() {
         binding.tfMessage.doOnTextChanged { text, _, _, _ ->
             newAlarmViewModel.updateMessage(text.toString())
         }
+    }
+
+    private fun popUpSoundPicker() {
+        val names = soundList.map { it.first }.toTypedArray()
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(R.string.select_tone)
+
+        builder.setSingleChoiceItems(names, selectedIndex) { _, which ->
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
+            mediaPlayer = null
+
+            selectedIndex = which
+
+            val soundRes = soundList[which].second
+            mediaPlayer = MediaPlayer.create(requireContext(), soundRes)
+            mediaPlayer?.apply {
+                isLooping = false
+                start()
+            }
+        }
+
+        // Nút OK -> xác nhận
+        builder.setPositiveButton("OK") { dialog, _ ->
+            // Dừng nhạc thử, lưu nhạc được chọn
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
+            mediaPlayer = null
+
+            if (selectedIndex != -1) {
+                val chosenSound = soundList[selectedIndex]
+
+                // TODO: Lưu chosenSound.second làm nhạc chuông báo thức
+                newAlarmViewModel.updateSound(chosenSound.second)
+                binding.btnMusic.text = chosenSound.first
+            }
+
+            dialog.dismiss()
+        }
+
+        // Nút Cancel -> hủy
+        builder.setNegativeButton(R.string.cancel) { dialog, _ ->
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
+            mediaPlayer = null
+            dialog.dismiss()
+        }
+
+        builder.show()
     }
 
     private fun popUpTimePicker() {
@@ -190,7 +263,8 @@ class NewAlarmFragment : Fragment() {
     private fun saveAlarm() {
         newAlarmViewModel.prepareAlarmBeforeSave(
             selectedDays,
-            binding.tfMessage.text.toString()
+            binding.tfMessage.text.toString(),
+            soundList.getOrNull(selectedIndex)?.second ?: R.raw.base
         )
         val alarm = newAlarmViewModel.newAlarm.value!!
 

@@ -1,11 +1,9 @@
 package vn.tutorial.simplealarmandroid.ui.settings
 
 import android.os.Bundle
-import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -64,13 +62,9 @@ class SettingFragment : Fragment() {
         val selectedIndex = codes.indexOf(currentLang)
 
         AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.language))
+            .setTitle(R.string.language)
             .setSingleChoiceItems(
-                ArrayAdapter(
-                    requireContext(),
-                    R.layout.simple_list_item_single_choice,
-                    languages
-                ), selectedIndex
+                languages, selectedIndex
             ) { dialog, which ->
                 requireContext().setAppLocale(codes[which])
                 appPrefs.appLanguage = codes[which]
@@ -101,11 +95,7 @@ class SettingFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.theme))
             .setSingleChoiceItems(
-                ArrayAdapter(
-                    requireContext(),
-                    R.layout.simple_list_item_single_choice,
-                    themes
-                ), selectedIndex
+                themes, selectedIndex
             ) { dialog, which ->
                 val newTheme = codes[which]
                 appPrefs.appTheme = newTheme
