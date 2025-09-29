@@ -50,6 +50,8 @@
     <string name="light">Light</string>
     <string name="dark">Dark</string>
 
+    <string name="character">Character</string>
+
     <string name="change_language">Language changed</string>
     <string name="change_theme">Theme changed</string>
 

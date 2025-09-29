@@ -47,6 +47,8 @@
     <string name="theme">Giao diện</string>
     <string name="light">Sáng</string>
     <string name="dark">Tối</string>
+    
+    <string name="character">Nhân vật</string>
 
     <string name="discard_change">Bỏ qua thay đổi?</string>
     <string name="discard_change_message">Bạn có các thay đổi chưa được lưu. Bạn có chắc chắn muốn bỏ qua chúng không?</string>

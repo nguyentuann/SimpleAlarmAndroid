@@ -20,9 +20,13 @@ import androidx.core.content.ContextCompat
 import vn.tutorial.simplealarmandroid.R
 import vn.tutorial.simplealarmandroid.databinding.ActivityAlarmReceiverBinding
 import vn.tutorial.simplealarmandroid.helpers.IconHelper
+import vn.tutorial.simplealarmandroid.local.db.AppPreferences
 import vn.tutorial.simplealarmandroid.utils.TimeConverter
 
 class AlarmReceiverActivity : AppCompatActivity() {
+
+    private lateinit var appPrefs: AppPreferences
+
     private lateinit var binding: ActivityAlarmReceiverBinding
     var stop by mutableIntStateOf(0)
     private var mediaPlayer: MediaPlayer? = null
@@ -37,9 +41,7 @@ class AlarmReceiverActivity : AppCompatActivity() {
         val message = intent.getStringExtra("ALARM_MESSAGE")
         val hour = intent.getIntExtra("ALARM_HOUR", 0)
         val minute = intent.getIntExtra("ALARM_MINUTE", 0)
-        val sound = intent.getIntExtra("ALARM_SOUND", 0)
 
-//        setupMediaPlayer(sound)
 
         binding.icon
             .setImageResource(IconHelper.getIconResourceForAlarm(hour))
@@ -53,6 +55,10 @@ class AlarmReceiverActivity : AppCompatActivity() {
         setListener(binding.btnStop)
         setListener(binding.btnThis)
         setListener(binding.btnAlarm)
+
+        appPrefs = AppPreferences(this)
+        val character = appPrefs.appCharacter
+        binding.lottieView.setAnimation(character)
 
     }
 

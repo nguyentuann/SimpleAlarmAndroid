@@ -78,6 +78,8 @@ dependencies {
 
     implementation(libs.androidx.fragment.ktx)
 
+    implementation(libs.androidx.lottie)
+
 
 
 }
