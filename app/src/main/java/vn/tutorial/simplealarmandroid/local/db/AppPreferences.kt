@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
-
+import vn.tutorial.simplealarmandroid.R
 class AppPreferences @Inject constructor(
     @ApplicationContext context: Context
 ) {
@@ -14,6 +14,7 @@ class AppPreferences @Inject constructor(
         private const val PREFS_NAME = "app_settings"
         private const val LANG_KEY = "app_language"
         private const val APP_THEME = "app_theme"
+        private const val APP_CHARACTER = "app_character"
     }
 
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -27,5 +28,9 @@ class AppPreferences @Inject constructor(
     var appTheme: Int
         get() = prefs.getInt(APP_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         set(value) = prefs.edit { putInt(APP_THEME, value) }
+
+    var appCharacter: Int
+        get() = prefs.getInt(APP_CHARACTER, R.raw.doraemon)
+        set(value) = prefs.edit { putInt(APP_CHARACTER, value) }
 
 }

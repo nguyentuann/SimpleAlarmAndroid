@@ -1,5 +1,6 @@
 package vn.tutorial.simplealarmandroid.ui.settings
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import com.airbnb.lottie.LottieAnimationView
 import dagger.hilt.android.AndroidEntryPoint
 import vn.tutorial.simplealarmandroid.R
 import vn.tutorial.simplealarmandroid.components.CommonComponents
@@ -43,6 +45,10 @@ class SettingFragment : Fragment() {
 
         binding.btnTheme.setOnClickListener {
             showThemeDialog()
+        }
+
+        binding.btnCharacter.setOnClickListener {
+            showCharacterDialog()
         }
 
         binding.toolBar.setNavigationOnClickListener {
@@ -110,6 +116,58 @@ class SettingFragment : Fragment() {
             }
             .setNegativeButton(getString(R.string.cancel), null)
             .show()
+    }
+
+    private fun showCharacterDialog() {
+        // Map tên nhân vật -> file Lottie JSON (res/raw)
+        val characters = mapOf(
+            "Doraemon" to R.raw.doraemon,
+            "Naruto" to R.raw.naruto,
+            "Spideman" to R.raw.spiderman,
+            "Superman" to R.raw.superman,
+            "Chachan" to R.raw.chachan
+        )
+
+        val characterNames = characters.keys.toTypedArray()
+        val currentCharacterRes = appPrefs.appCharacter
+        val selectedIndex = characters.values.indexOf(currentCharacterRes)
+            .takeIf { it >= 0 } ?: 0
+
+        var tempSelectedRes = currentCharacterRes
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.character)
+            .setSingleChoiceItems(characterNames, selectedIndex) { _, which ->
+                val selectedCharacterName = characterNames[which]
+                tempSelectedRes = characters[selectedCharacterName] ?: R.raw.doraemon
+
+                showLottiePopup(tempSelectedRes)
+
+            }
+            .setPositiveButton("OK") { dialog, _ ->
+
+
+                // Lưu resource ID vào appPrefs
+                appPrefs.appCharacter = tempSelectedRes
+
+                dialog.dismiss()
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+    private fun showLottiePopup(lottieRes: Int) {
+        val lottieDialog = Dialog(requireContext())
+        lottieDialog.setContentView(R.layout.dialog_lottie) // layout chứa LottieAnimationView
+        val lottieView = lottieDialog.findViewById<LottieAnimationView>(R.id.lottieView)
+        lottieView.setAnimation(lottieRes)
+        lottieView.loop(true)
+        lottieView.playAnimation()
+
+        lottieDialog.show()
+
+        // Tự động đóng sau 3 giây
+        lottieView.postDelayed({ lottieDialog.dismiss() }, 3000)
     }
 
     override fun onDestroyView() {
